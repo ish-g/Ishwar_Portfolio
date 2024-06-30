@@ -1857,10 +1857,17 @@ input, select, textarea {
 		max-height: 170vh; /* Adjust as needed */
 		display: none; /* Initially hide the image */
 		margin: auto; /* Center the image horizontally */
-		border: 2px solid #000000; /* Border around the image */
-    	border-radius: 8px; 
+		border-radius: 8px;
 		margin-top: 30px;
-	  }
+	
+		/* Use border-image to create gradient border */
+		border: 2px solid transparent; /* Start with a transparent solid border */
+		padding: 2px; /* Create space for the border gradient */
+	
+		/* Apply gradient as border */
+		border-image: linear-gradient(0deg, #efa8b0, #a89cc8, #8cc9f0);
+		border-image-slice: 1; /* Ensures the gradient is applied across the entire border */
+	}
 	  
 	  .preview-button {
 		background-color: #007bff;
