@@ -63,12 +63,31 @@
 								</header>
 								<div class="content">
 									<p>Explore my detailed resume to learn more about my skills, experiences, and education.</p>
-									<!-- Front Page Image with Border -->
-									<img src="Resume/Ishwar_Gupta_Resume.jpg" alt="Resume Front Page" style="max-width: 100%; height: auto; border: 2px solid #333;">
-									<!-- PDF Showcase -->
-									<object data="Resume/Ishwar_Gupta_Resume.pdf" type="application/pdf" width="100%" height="800px">
-										<p>It appears you don't have a PDF plugin for this browser. No worries, you can <a href="Resume/Ishwar_Gupta_Resume.pdf" target="_blank">download it here</a>.</p>
-									</object>
+									<!-- Preview Button (Hidden) -->
+									<div class="preview-container">
+										<button class="button" onclick="toggleImage()">Preview Resume</button>
+										<img id="preview" class="preview-image" src="Resume/Ishwar_Gupta_Resume.jpg" alt="Placeholder Image">
+									  </div>
+									  
+									  <script>
+										function toggleImage() {
+										  var image = document.getElementById('preview');
+										  image.style.display = (image.style.display === 'none' || image.style.display === '') ? 'block' : 'none';
+										}
+									  </script>
+									
+									<!-- Front Page Image with Border
+									<div class="resume-preview">
+										<img src="Resume/Ishwar_Gupta_Resume.jpg" alt="Resume Front Page">
+									</div>
+									
+									 PDF Showcase -->
+									<!-- <div class="resume-pdf">
+										<object data="Resume/Ishwar_Gupta_Resume.pdf" type="application/pdf">
+											<p>It appears you don't have a PDF plugin for this browser. No worries, you can <a href="Resume/Ishwar_Gupta_Resume.pdf" target="_blank">download it here</a>.</p>
+										</object>
+									</div> -->
+									
 									<!-- Download Button -->
 									<footer class="major">
 										<ul class="actions special">

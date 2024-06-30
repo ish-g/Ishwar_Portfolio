@@ -1838,7 +1838,7 @@ input, select, textarea {
 		border: 0;
 		cursor: pointer;
 		display: inline-block;
-		font-weight: 300;
+		font-weight: normal;
 		height: 2.75em;
 		line-height: 2.75em;
 		min-width: 9.25em;
@@ -1846,7 +1846,44 @@ input, select, textarea {
 		text-align: center;
 		text-decoration: none;
 		white-space: nowrap;
+		font-style: bold;
 	}
+	.preview-container {
+		text-align: center;
+	  }
+	  
+	  .preview-image {
+		max-width: 200%;
+		max-height: 170vh; /* Adjust as needed */
+		display: none; /* Initially hide the image */
+		margin: auto; /* Center the image horizontally */
+		border: 2px solid #000000; /* Border around the image */
+    	border-radius: 8px; 
+		margin-top: 30px;
+	  }
+	  
+	  .preview-button {
+		background-color: #007bff;
+		color: #fff;
+		padding: 10px 20px;
+		border: none;
+		cursor: pointer;
+		border-radius: 4px;
+		transition: background-color 0.3s ease;
+		margin-bottom: 20px;
+	  }
+	  
+	  .preview-button:hover {
+		background-color: #0056b3;
+	  }
+	  
+	  .preview-button:focus {
+		outline: none;
+	  }
+	  
+	  .preview-button:active {
+		transform: translateY(1px);
+	  }
 
 		input[type="submit"].icon,
 		input[type="reset"].icon,
