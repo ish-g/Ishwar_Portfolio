@@ -1,370 +1,1504 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ISHWAR GUPTA / SENIOR DATA ENGINEER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:ital,wght@0,100;0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════
+   ROOT & RESET
+═══════════════════════════════════════════ */
+:root{
+  --void:#030508;
+  --deep:#07090f;
+  --card:#0a0e18;
+  --teal:#00ffd1;
+  --teal2:#00c9a7;
+  --orange:#ff6b2b;
+  --gold:#ffb800;
+  --red:#ff2d55;
+  --text:#dde4f0;
+  --muted:#4a5568;
+  --border:rgba(0,255,209,.1);
+  --display:'Bebas Neue',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --sans:'DM Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px;cursor:none}
+body{background:var(--void);color:var(--text);font-family:var(--sans);overflow-x:hidden;font-weight:300}
+a{text-decoration:none;color:inherit}
+::selection{background:var(--teal);color:#000}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--void)}
+::-webkit-scrollbar-thumb{background:var(--teal);border-radius:0}
 
-<html xmlns="http://www.w3.org/1999/html">
-	<head>
-		<link href="images/cv.ico" rel="icon" type="image/x-icon" />
-		<title>Ishwar's Portfolio</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+/* ═══════════════════════════════════════════
+   NOISE GRAIN OVERLAY
+═══════════════════════════════════════════ */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.035;pointer-events:none;z-index:9999;animation:grain 8s steps(10) infinite;
+}
+@keyframes grain{0%,100%{transform:translate(0,0)}10%{transform:translate(-2%,-3%)}30%{transform:translate(3%,2%)}50%{transform:translate(-1%,4%)}70%{transform:translate(2%,-2%)}90%{transform:translate(-3%,1%)}}
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+/* ═══════════════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════════════ */
+#cursor-dot{
+  position:fixed;width:8px;height:8px;border-radius:50%;
+  background:var(--teal);pointer-events:none;z-index:99999;
+  transform:translate(-50%,-50%);transition:transform .1s,width .2s,height .2s,background .2s;
+  box-shadow:0 0 10px var(--teal),0 0 20px var(--teal);
+  mix-blend-mode:screen;
+}
+#cursor-ring{
+  position:fixed;width:36px;height:36px;border-radius:50%;
+  border:1px solid rgba(0,255,209,.5);pointer-events:none;z-index:99998;
+  transform:translate(-50%,-50%);transition:all .15s cubic-bezier(.25,.46,.45,.94);
+  mix-blend-mode:screen;
+}
+body:has(a:hover,button:hover) #cursor-dot{width:14px;height:14px;background:var(--orange)}
+body:has(a:hover,button:hover) #cursor-ring{width:54px;height:54px;border-color:var(--orange)}
 
-		<!-- Header -->
-		<header id="header" class="alt">
-			<span class="logo"><img src="images/portfolio.svg" alt="" /></span>
-			<h1 style="font-family: Times New Roman, serif;"><strong>Ishwar Gupta</strong></h1>
-            <p style="margin-bottom: 20px; font-family: Roboto, sans-serif; font-size: 28px;">Welcome to my Data Analytics/Science Playground</p>
-			<p style="margin-bottom: 20px; font-family: Roboto, sans-serif; font-size: 20px;">Exploring Insights Through Data Analysis</p>
-			<p>
-				<img src="images/location.svg" alt="Location Icon" style="vertical-align: middle; margin-right: 10px;" />
-				Noida, India
-			</p>
-		</header>
+/* ═══════════════════════════════════════════
+   PROGRESS BAR — pipeline style
+═══════════════════════════════════════════ */
+#progress{
+  position:fixed;top:0;left:0;height:2px;z-index:10000;
+  background:linear-gradient(90deg,var(--teal),var(--orange),var(--gold));
+  width:0;transition:width .1s linear;
+  box-shadow:0 0 8px var(--teal);
+}
 
-				<!-- Nav -->
-					<nav id="nav">
-						<ul>
-							<li><a href="#intro" class="active">About me</a></li>
-							<li><a href="#resume">Resume</a></li>
-							<li><a href="#certificates">Certificates</a></li>
-							<li><a href="#projects">Projects</a></li>
-							<li><a href="#blogs">Blogs</a></li>
-							<li><a href="#cta">Contact info</a></li>
-							<li>
-								<a href="#intro">
-									<a href="https://visitcount.itsvg.in">
-										<img src="https://visitcount.itsvg.in/api?id=ishwar4554&label=Profile%20Views&icon=5&pretty=false" />
-									</a>
-								</a>
-							</li>
-						</ul>
-					</nav>
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:60px;
+  border-bottom:1px solid var(--border);
+  background:rgba(3,5,8,.7);backdrop-filter:blur(16px);
+}
+.nav-brand{font-family:var(--mono);font-size:13px;color:var(--teal);letter-spacing:.05em}
+.nav-brand span{color:var(--muted)}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
+.nav-links a{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;transition:color .2s;position:relative}
+.nav-links a:hover{color:var(--teal)}
+.nav-cta{font-family:var(--mono);font-size:10px;padding:7px 18px;border:1px solid var(--teal);color:var(--teal);letter-spacing:.1em;text-transform:uppercase;transition:all .2s;border-radius:2px}
+.nav-cta:hover{background:var(--teal);color:#000}
+.nav-status{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;color:var(--muted)}
+.nav-status-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;animation:blink-dot 2s infinite}
+@keyframes blink-dot{0%,100%{opacity:1}50%{opacity:.3}}
 
-				<!-- Main -->
-					<div id="main">
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+#hero{
+  position:relative;min-height:100vh;display:flex;align-items:flex-end;
+  padding:0 3rem 5rem;overflow:hidden;
+}
+canvas#bg-canvas{position:absolute;inset:0;opacity:.7}
+.hero-inner{position:relative;z-index:2;width:100%}
+.hero-eyebrow{
+  font-family:var(--mono);font-size:11px;color:var(--teal);
+  letter-spacing:.2em;text-transform:uppercase;margin-bottom:1rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.hero-eyebrow::before{content:'';width:40px;height:1px;background:var(--teal)}
 
-						<!-- Introduction -->
-							<section id="intro" class="main">
-								<div class="spotlight">
-									<div class="content">
-										<header class="major">
-											<h2>About Me</h2>
-										</header>
-										<p>Hello there! I'm Ishwar Gupta, a passionate Data Analyst with a background in mathematics and statistical foundation. I have always been intrigued by the power of data and its ability to unravel hidden patterns, draw meaningful insights, and drive informed decisions.</p>
-										<ul class="actions">
-											<li><a href="generic.html" class="button">Learn More</a></li>
-										</ul>
-									</div>
-									<span class="image"><img src="images/my_pic.png" alt="" /></span>
-								</div>
-							</section>
+.hero-name{
+  font-family:var(--display);
+  font-size:clamp(5rem,14vw,14rem);
+  color:#fff;line-height:.88;letter-spacing:-.01em;
+  position:relative;display:inline-block;
+}
+.hero-name .glitch{position:relative;display:inline-block}
+.hero-name .glitch::before,.hero-name .glitch::after{
+  content:attr(data-text);position:absolute;top:0;left:0;
+  background:var(--void);overflow:hidden;
+}
+.hero-name .glitch::before{
+  left:2px;text-shadow:-2px 0 var(--teal);
+  animation:glitch1 4s infinite linear alternate-reverse;clip-path:polygon(0 15%,100% 15%,100% 35%,0 35%);
+}
+.hero-name .glitch::after{
+  left:-2px;text-shadow:2px 0 var(--orange);
+  animation:glitch2 3.5s infinite linear alternate-reverse;clip-path:polygon(0 60%,100% 60%,100% 75%,0 75%);
+}
+@keyframes glitch1{
+  0%,90%,100%{clip-path:polygon(0 15%,100% 15%,100% 35%,0 35%);transform:translate(0)}
+  92%{clip-path:polygon(0 15%,100% 15%,100% 36%,0 36%);transform:translate(-3px,1px)}
+  94%{clip-path:polygon(0 14%,100% 14%,100% 35%,0 35%);transform:translate(3px,-1px)}
+  96%{clip-path:polygon(0 15%,100% 15%,100% 35%,0 35%);transform:translate(0)}
+}
+@keyframes glitch2{
+  0%,88%,100%{clip-path:polygon(0 60%,100% 60%,100% 75%,0 75%);transform:translate(0)}
+  90%{clip-path:polygon(0 59%,100% 59%,100% 76%,0 76%);transform:translate(3px,2px)}
+  93%{clip-path:polygon(0 61%,100% 61%,100% 74%,0 74%);transform:translate(-3px,-2px)}
+  95%{clip-path:polygon(0 60%,100% 60%,100% 75%,0 75%);transform:translate(0)}
+}
 
-						<!-- Resume Section -->
-							<section id="resume" class="main special">
-								<header class="major">
-									<h2>My Resume</h2>
-								</header>
-								<div class="content">
-									<p>Explore my detailed resume to learn more about my skills, experiences, and education.</p>
-									<!-- Preview Button (Hidden) -->
-									<div class="preview-container">
-										<button class="button" onclick="toggleImage()">Preview Resume</button>
-										<img id="preview" class="preview-image" src="Resume/Ishwar_Gupta_Resume.jpg" alt="Placeholder Image">
-									  </div>
-									  
-									  <script>
-										function toggleImage() {
-										  var image = document.getElementById('preview');
-										  image.style.display = (image.style.display === 'none' || image.style.display === '') ? 'block' : 'none';
-										}
-									  </script>
-									  
-									
-									<!-- Front Page Image with Border
-									<div class="resume-preview">
-										<img src="Resume/Ishwar_Gupta_Resume.jpg" alt="Resume Front Page">
-									</div>
-									
-									 PDF Showcase -->
-									<!-- <div class="resume-pdf">
-										<object data="Resume/Ishwar_Gupta_Resume.pdf" type="application/pdf">
-											<p>It appears you don't have a PDF plugin for this browser. No worries, you can <a href="Resume/Ishwar_Gupta_Resume.pdf" target="_blank">download it here</a>.</p>
-										</object>
-									</div> -->
-									
-									<!-- Download Button -->
-									<footer class="major">
-										<ul class="actions special">
-											<li><a href="Resume/Ishwar_Gupta_Resume.pdf" class="button" download>Download Full Resume</a></li>
-										</ul>
-									</footer>
-								</div>
-							</section>
+.hero-bottom{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-top:2rem;flex-wrap:wrap;gap:2rem;
+}
+.hero-role-block{max-width:480px}
+.hero-role{font-family:var(--mono);font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:1.5rem}
+.hero-role span{color:var(--teal)}
+.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  padding:.8rem 2rem;transition:all .25s;display:inline-flex;align-items:center;gap:.5rem;
+}
+.btn-fill{background:var(--teal);color:#000;border:1px solid var(--teal);font-weight:700}
+.btn-fill:hover{background:transparent;color:var(--teal);box-shadow:0 0 20px rgba(0,255,209,.3)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.15)}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
+.hero-stats-row{display:flex;gap:3rem;flex-wrap:wrap}
+.hero-stat{text-align:right}
+.hero-stat-num{
+  font-family:var(--display);font-size:clamp(2.5rem,5vw,4.5rem);
+  line-height:1;color:var(--teal);display:block;
+  text-shadow:0 0 30px rgba(0,255,209,.4);
+}
+.hero-stat-num.orange{color:var(--orange);text-shadow:0 0 30px rgba(255,107,43,.4)}
+.hero-stat-num.gold{color:var(--gold);text-shadow:0 0 30px rgba(255,184,0,.4)}
+.hero-stat-label{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:4px;display:block}
 
-						<!-- Certificates -->
-							<section id="certificates" class="main special">
-								<header class="major">
-									<h2>My Certificates</h2>
-								</header>
-								<div class="project-container">
+/* Scroll indicator */
+.hero-scroll{
+  position:absolute;right:3rem;bottom:5rem;
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;
+  writing-mode:vertical-rl;
+}
+.hero-scroll::after{content:'';width:1px;height:60px;background:linear-gradient(var(--teal),transparent);animation:scroll-pulse 2s ease-in-out infinite}
+@keyframes scroll-pulse{0%,100%{opacity:.4;height:40px}50%{opacity:1;height:80px}}
 
-									<!-- Certificates 1 -->
-									<div class="project-card">
-										<img src="images/data science by cisco.jpg" alt="Certificate 3 Thumbnail">
-										<h3 style="font-weight: bold;">Introduction to Data Science</h3>
-										<h5 style="font-weight: bold;">Issued by CISCO</h5>
-										<a href="https://www.credly.com/badges/8464d6f4-cdf8-445f-b428-463254082086/linked_in_profile" class="button" target="_blank">Show credential</a>
-									</div>
+/* ═══════════════════════════════════════════
+   MARQUEE DIVIDER
+═══════════════════════════════════════════ */
+.marquee-wrap{
+  overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:.6rem 0;background:rgba(0,255,209,.02);position:relative;z-index:1;
+}
+.marquee-track{display:flex;gap:0;white-space:nowrap;animation:marquee 20s linear infinite}
+.marquee-item{
+  font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;
+  padding:0 2rem;display:flex;align-items:center;gap:1rem;flex-shrink:0;
+}
+.marquee-item .dot{width:4px;height:4px;border-radius:50%;background:var(--teal);opacity:.6}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-									<!-- Certificates 2 -->
-									<div class="project-card">
-										<img src="images/business analytics by simplilearn.jpg" alt="Project 3 Thumbnail">
-										<h3 style="font-weight: bold;">Business Analytics with Excel</h3>
-										<h5 style="font-weight: bold;">Issued by Simplilearn</h5>
-										<a href="https://www.simplilearn.com/skillup-certificate-landing?token=eyJjb3Vyc2VfaWQiOiI2NjQiLCJjZXJ0aWZpY2F0ZV91cmwiOiJodHRwczpcL1wvY2VydGlmaWNhdGVzLnNpbXBsaWNkbi5uZXRcL3NoYXJlXC90aHVtYl80ODYwMzU0XzE3MDc0MDU0NjcucG5nIiwidXNlcm5hbWUiOiJJc2h3YXIgR3VwdGEifQ%3D%3D&utm_source=shared-certificate&utm_medium=lms&utm_campaign=shared-certificate-promotion&referrer=https%3A%2F%2Flms.simplilearn.com%2Fcourses%2F2738%2FBusiness-Analytics-with-Excel%2Fcertificate%2Fdownload-skillup&%24web_only=true&_branch_match_id=1284025136556183917&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXL87MLcjJ1EssKNDLyczL1k%2FVd3TJDgk1TXQxdE8CAC6HodglAAAA" class="button" target="_blank">Show credential</a>
-									</div>
+/* ═══════════════════════════════════════════
+   SECTIONS COMMON
+═══════════════════════════════════════════ */
+.section{position:relative;z-index:1;padding:8rem 3rem}
+.section-num{
+  font-family:var(--display);font-size:clamp(8rem,15vw,16rem);
+  color:transparent;-webkit-text-stroke:1px rgba(0,255,209,.08);
+  position:absolute;top:-1rem;left:2rem;line-height:1;pointer-events:none;user-select:none;
+  letter-spacing:-.02em;
+}
+.sec-label{
+  font-family:var(--mono);font-size:11px;color:var(--teal);
+  letter-spacing:.2em;text-transform:uppercase;margin-bottom:.75rem;
+  display:flex;align-items:center;gap:.75rem;
+}
+.sec-label::before{content:'';width:24px;height:1px;background:var(--teal)}
+.sec-label .bracket{color:var(--muted)}
+h2.sec-title{
+  font-family:var(--display);font-size:clamp(2.5rem,6vw,6rem);
+  color:#fff;line-height:.9;margin-bottom:3rem;letter-spacing:-.01em;
+}
+h2.sec-title em{color:var(--teal);font-style:normal}
+h2.sec-title .orange{color:var(--orange)}
+h2.sec-title .gold{color:var(--gold)}
 
-									<!-- Certificates 3 -->
-									<div class="project-card">
-										<img src="images/python hackerank.jpg" alt="Certificates 3 Thumbnail">
-										<h3 style="font-weight: bold;">Python</h3>
-										<h5 style="font-weight: bold;">Issued by HackerRank</h5>
-										<a href="https://www.hackerrank.com/certificates/5616582bdaf3" class="button" target="_blank">Show credential</a>
-									</div>
+/* ═══════════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════════ */
+#about{background:var(--deep)}
+.about-layout{display:grid;grid-template-columns:1fr 1.1fr;gap:6rem;align-items:start;position:relative;z-index:1}
+.about-text p{color:var(--muted);font-size:1.05rem;line-height:1.85;margin-bottom:1.25rem}
+.about-text p strong{color:var(--text);font-weight:400}
+.about-text p .hl{color:var(--teal)}
+.about-stack{margin-top:2.5rem}
+.stack-label{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1rem}
+.stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.4rem}
+.stack-item{
+  font-family:var(--mono);font-size:11px;color:var(--muted);
+  padding:6px 10px;border:1px solid rgba(255,255,255,.05);
+  transition:all .2s;position:relative;overflow:hidden;background:rgba(255,255,255,.02);
+}
+.stack-item::before{content:'';position:absolute;inset:0;background:var(--teal);transform:scaleX(0);transform-origin:left;transition:transform .3s;z-index:0}
+.stack-item:hover{color:#000;border-color:var(--teal)}
+.stack-item:hover::before{transform:scaleX(1)}
+.stack-item span{position:relative;z-index:1}
+.about-cards{display:flex;flex-direction:column;gap:1px;background:var(--border)}
+.about-card{
+  background:var(--card);padding:1.5rem 1.75rem;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  transition:all .3s;border-left:2px solid transparent;
+}
+.about-card:hover{border-left-color:var(--teal);background:#0d1322}
+.about-card-left{}
+.about-card-tag{font-family:var(--mono);font-size:9px;color:var(--teal);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.5rem}
+.about-card-val{font-family:var(--display);font-size:1.8rem;color:#fff;letter-spacing:.01em}
+.about-card-sub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:.25rem}
+.about-card-arrow{font-family:var(--mono);font-size:1.2rem;color:var(--border);transition:all .3s}
+.about-card:hover .about-card-arrow{color:var(--teal);transform:translateX(4px)}
 
-									<!-- Certificates 4 -->
-									<div class="project-card">
-										<img src="images/sql intermediate hackerrank.jpg" alt="Certificates 4 Thumbnail">
-										<h3 style="font-weight: bold;">SQL</h3>
-										<h5 style="font-weight: bold;">Issued by HackerRank</h5>
-										<a href="https://www.hackerrank.com/certificates/7053d3aa322a" class="button" target="_blank">Show credential</a>
-									</div>
-								</div>
-							</section>
+/* ═══════════════════════════════════════════
+   EXPERIENCE — big timeline
+═══════════════════════════════════════════ */
+#experience{background:var(--void)}
+.exp-grid{display:grid;grid-template-columns:200px 1fr;gap:0;position:relative;z-index:1}
+.exp-sidebar{position:sticky;top:80px;height:fit-content;padding-right:3rem;border-right:1px solid var(--border)}
+.exp-sidebar-company{font-family:var(--display);font-size:2.5rem;color:var(--teal);line-height:1;margin-bottom:.5rem;writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.1em}
+.exp-sidebar-date{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.08em}
+.exp-sidebar-badge{
+  margin-top:1.5rem;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 10px;background:rgba(0,255,209,.1);border:1px solid rgba(0,255,209,.3);color:var(--teal);
+  display:inline-block;
+}
+.exp-main{padding-left:3rem}
+.proj-entry{
+  border:1px solid var(--border);margin-bottom:1.5rem;
+  transition:all .3s;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--card) 0%,transparent 100%);
+}
+.proj-entry::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,255,209,.03),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.proj-entry:hover{border-color:rgba(0,255,209,.3)}
+.proj-entry:hover::before{opacity:1}
+.proj-entry-header{
+  padding:1.25rem 1.5rem .75rem;display:flex;
+  align-items:flex-start;justify-content:space-between;gap:1rem;
+  cursor:pointer;
+}
+.proj-entry-name{
+  font-family:var(--mono);font-size:11px;color:var(--orange);
+  letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem;
+}
+.proj-entry-title{font-family:var(--display);font-size:1.6rem;color:#fff;line-height:1}
+.proj-entry-num{
+  font-family:var(--display);font-size:3rem;color:transparent;
+  -webkit-text-stroke:1px rgba(255,255,255,.08);flex-shrink:0;line-height:1;
+}
+.proj-body{max-height:0;overflow:hidden;transition:max-height .5s ease}
+.proj-body.open{max-height:800px}
+.proj-body-inner{padding:0 1.5rem 1.5rem}
+.proj-bullets{list-style:none}
+.proj-bullets li{font-size:.9rem;color:var(--muted);padding:.35rem 0 .35rem 1.5rem;position:relative;line-height:1.6;border-left:1px solid rgba(255,255,255,.04);margin-left:.5rem;padding-left:1rem}
+.proj-bullets li::before{content:'▸';position:absolute;left:-8px;color:var(--teal);font-size:.8rem;background:var(--card);padding:0 2px}
+.proj-bullets li strong{color:var(--text);font-weight:400}
+.proj-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:1rem}
+.ptag{font-family:var(--mono);font-size:10px;padding:2px 9px;border:1px solid rgba(0,255,209,.15);color:rgba(0,255,209,.6);letter-spacing:.03em}
+.ptag:hover{background:var(--teal);color:#000;border-color:var(--teal)}
+.proj-toggle{
+  margin-left:auto;width:26px;height:26px;border:1px solid var(--border);
+  background:transparent;color:var(--muted);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+  transition:all .2s;flex-shrink:0;margin-top:.25rem;
+}
+.proj-toggle:hover{border-color:var(--teal);color:var(--teal)}
 
-						<!-- Projects -->
-						<section id="projects" class="main special">
-							<header class="major">
-								<h2>My Projects</h2>
-							</header>
-							<div class="project-container">
-								
-								<!-- Project 1 -->
-								<div class="project-card">
-									<img src="images/project1_thumbnail.jpg" alt="Project 1 Thumbnail">
-									<h3 style="font-weight: bold;">SmartEstateHub: Property Analytics and Recommender System using ML/ ML Ops</h3>
-									<p style="font-size: 16px;">In my capstone project, I delved into the exciting realm of real estate analytics and recommendation systems. Leveraging the power of machine learning, I crafted a robust solution tailored for estate property enthusiasts and potential buyers.                                                              </p>
-									<a href="https://github.com/ish-g/SmartEstateHub?tab=readme-ov-file#readme" class="button" target="_blank">Read More</a>
-									<a href="https://smartestateapp.streamlit.app/" class="button" target="_blank">Web App</a>
-								</div>
+/* ═══════════════════════════════════════════
+   SKILLS — terminal aesthetic
+═══════════════════════════════════════════ */
+#skills{background:var(--deep)}
+.skills-terminal{
+  border:1px solid rgba(0,255,209,.15);
+  background:var(--card);font-family:var(--mono);position:relative;z-index:1;
+}
+.terminal-bar{
+  display:flex;align-items:center;gap:.5rem;padding:.7rem 1rem;
+  border-bottom:1px solid rgba(0,255,209,.1);background:rgba(0,255,209,.04);
+}
+.t-dot{width:10px;height:10px;border-radius:50%}
+.t-dot.red{background:#ff5f56}.t-dot.yellow{background:#ffbd2e}.t-dot.green{background:#27c93f}
+.t-title{font-size:11px;color:var(--muted);letter-spacing:.08em;margin-left:.5rem}
+.terminal-body{padding:1.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+.skill-group{}
+.skill-group-name{font-size:11px;color:var(--teal);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.skill-group-name::before{content:'$';color:var(--orange)}
+.skill-group-name::after{content:'--list';color:var(--muted)}
+.skill-line{
+  display:flex;align-items:center;gap:.75rem;padding:.3rem 0;
+  border-bottom:1px solid rgba(255,255,255,.03);font-size:11px;color:var(--muted);
+}
+.skill-line:last-child{border-bottom:none}
+.skill-bar-track{flex:1;height:3px;background:rgba(255,255,255,.05);position:relative;overflow:hidden}
+.skill-bar-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--teal2));border-radius:0;width:0;transition:width 1.2s cubic-bezier(.22,1,.36,1);box-shadow:0 0 6px var(--teal)}
+.skill-line:hover .skill-bar-fill{box-shadow:0 0 10px var(--teal),0 0 20px rgba(0,255,209,.3)}
+.skill-line:nth-child(4n+2) .skill-bar-fill{background:linear-gradient(90deg,var(--orange),#ff9a6c)}
+.skill-line:nth-child(4n+3) .skill-bar-fill{background:linear-gradient(90deg,var(--gold),#ffd666)}
 
-								<!-- Project 2 -->
-								<div class="project-card">
-									<img src="images/Movie-Recommender-System.jpg" alt="Project 2 Thumbnail">
-									<h3 style="font-weight: bold;">Movie-Recommender-System</h3>
-									<p style="font-size: 16px;">I'm delving into the creation of a Movie Recommender System, leveraging advanced machine learning algorithms to provide personalized suggestions. This project aims to enhance user experience by analyzing preferences and patterns, delivering tailored movie recommendations for an engaging cinematic journey.</p>
-									<a href="https://github.com/ish-g/ML_P2_Movie-Recommender-System?tab=readme-ov-file#readme" class="button" target="_blank">Read More</a>
-									<a href="https://mlp2movie-recommender-system-x69tdzudaoermgv8bjarjw.streamlit.app/" class="button" target="_blank">Web App</a>
-								</div>
+/* ═══════════════════════════════════════════
+   PROJECTS — horizontal scroll cards
+═══════════════════════════════════════════ */
+#projects{background:var(--void);padding-bottom:8rem}
+.projects-scroll-hint{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;position:relative;z-index:1}
+.projects-scroll-hint::after{content:'drag →';color:var(--teal)}
+.projects-track{
+  display:flex;gap:1.5rem;
+  overflow-x:auto;padding:1rem 3rem 2rem;margin:0 -3rem;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:thin;scrollbar-color:var(--teal) transparent;
+  cursor:grab;
+}
+.projects-track:active{cursor:grabbing}
+.proj-card{
+  flex-shrink:0;width:380px;scroll-snap-align:start;
+  border:1px solid var(--border);background:var(--card);
+  transition:all .35s;position:relative;overflow:hidden;
+}
+.proj-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--teal),var(--orange));
+  transform:scaleX(0);transform-origin:left;transition:transform .4s;
+}
+.proj-card:hover{border-color:rgba(0,255,209,.3);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.proj-card:hover::before{transform:scaleX(1)}
+.proj-card-img{
+  height:140px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#0a0e18,#0d1525);
+  position:relative;overflow:hidden;
+}
+.proj-card-img::after{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(0,255,209,.03) 40px,rgba(0,255,209,.03) 41px);
+}
+.proj-body{padding:1.25rem}
+.proj-label{font-family:var(--mono);font-size:9px;color:var(--teal);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.5rem}
+.proj-title{font-family:var(--display);font-size:1.5rem;color:#fff;line-height:1.1;margin-bottom:.75rem;letter-spacing:.01em}
+.proj-desc{font-size:.83rem;color:var(--muted);line-height:1.7;margin-bottom:1rem}
+.proj-card-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.75rem}
+.proj-links{display:flex;gap:.75rem}
+.proj-link{font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:.05em;transition:color .2s;display:flex;align-items:center;gap:.3rem}
+.proj-link:hover{color:var(--orange)}
 
-								<!-- Project 3 -->
-								<div class="project-card">
-									<img src="images/ipl_stats_webapp.jpg" alt="Project 3 Thumbnail">
-									<h3 style="font-weight: bold;">IPL Data Science and Analysis Project WebApp</h3>
-									<p style="font-size: 16px;">Dive into the world of cricket with our IPL Data Science and Analysis Project WebApp. Explore comprehensive insights and analysis derived from IPL cricket matches using advanced data science techniques. From player performance to team strategies, uncover the hidden patterns and trends within the game.</p>
-									<a href="https://github.com/ish-g/Cricket_Analysis_IPL/tree/master?tab=readme-ov-file#readme" class="button" target="_blank">Read More</a>
-									<a href="https://cricketanalysisipl.streamlit.app/" class="button" target="_blank">Web App</a>
-								</div>
+/* ═══════════════════════════════════════════
+   CERTIFICATIONS — neon cards
+═══════════════════════════════════════════ */
+#certifications{background:var(--deep)}
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;background:var(--border);position:relative;z-index:1}
+.cert-card{
+  background:var(--card);padding:2rem 1.5rem;text-align:center;
+  transition:all .3s;position:relative;overflow:hidden;
+}
+.cert-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:0;
+  background:linear-gradient(0deg,var(--teal),transparent);
+  transition:height .3s;opacity:.1;
+}
+.cert-card:hover{background:#0d1322}
+.cert-card:hover::after{height:60px}
+.cert-icon{font-size:2rem;display:block;margin-bottom:1rem;filter:grayscale(1);transition:filter .3s}
+.cert-card:hover .cert-icon{filter:grayscale(0)}
+.cert-name{font-family:var(--display);font-size:1.2rem;color:#fff;margin-bottom:.25rem;line-height:1.2}
+.cert-issuer{font-family:var(--mono);font-size:10px;color:var(--teal);margin-bottom:1rem;letter-spacing:.08em}
+.cert-link{
+  font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.08em;
+  transition:color .2s;border-bottom:1px solid var(--border);padding-bottom:1px;
+  text-transform:uppercase;
+}
+.cert-link:hover{color:var(--teal);border-color:var(--teal)}
 
-								<!-- Project 4 -->
-								<div class="project-card">
-									<img src="images/india-population-statistics.jpg" alt="Project 4 Thumbnail">
-									<h3 style="font-weight: bold;">India Census Statistics Dashboard WebApp</h3>
-									<p style="font-size: 16px;">Embark on an insightful journey into India's demographic landscape with our interactive Census Statistics Dashboard WebApp. From population trends to literacy rates, explore comprehensive visualizations and data insights derived from India's census data. Experience the power of data visualization in understanding the dynamics of India's diverse population.</p>
-									<a href="https://github.com/ish-g/Streamlit_Plotly-India_Cencus_Dashboard?tab=readme-ov-file#readme" class="button" target="_blank">Read More</a>
-									<a href="https://ish-g-streamlit-plotly-india-cencus-dashboard-app-1m6tcu.streamlit.app/" class="button" target="_blank">Web App</a>
-								</div>
-								
-								<!-- Project 5 -->
-								<div class="project-card">
-									<img src="images/HR_DashBoard.jpg" alt="Project 5 Thumbnail">
-									<h3 style="font-weight: bold;">HR Analytics Dashboard</h3>
-									<p style="font-size: 16px;">In HR analytics project, I developed a comprehensive dashboard to analyze employee performance and engagement metrics. It includes turnover rates, performance evaluations, enriched with sentiment analysis from employee feedback. This tool enables proactive decision-making and fosters a data-driven approach to improving workplace satisfaction.                                   .</p>
-									<a href="https://github.com/ish-g/HR-Analytics-Dashboard?tab=readme-ov-file#readme" class="button" target="_blank">Read More</a>
-									<a href="https://public.tableau.com/app/profile/ishwar.gupta/viz/HRAnalyticalDashboard_17166495470000/HRAnalyticsDashboard" class="button" target="_blank">Dashboard</a>
-								</div>
+/* ═══════════════════════════════════════════
+   BLOGS
+═══════════════════════════════════════════ */
+#blogs{background:var(--void)}
+.blogs-layout{display:grid;gap:1px;background:var(--border);position:relative;z-index:1}
+.blog-item{background:var(--card);transition:all .3s;overflow:hidden}
+.blog-item:hover{background:#0a0f1c}
+.blog-header{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:1.5rem;
+  padding:1.75rem 2rem;cursor:pointer;
+}
+.blog-meta{flex:1}
+.blog-num{font-family:var(--display);font-size:3rem;color:transparent;-webkit-text-stroke:1px rgba(0,255,209,.15);line-height:1;float:right;margin-left:1rem}
+.blog-cat{font-family:var(--mono);font-size:10px;color:var(--orange);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.6rem}
+.blog-title{font-family:var(--display);font-size:clamp(1.3rem,3vw,2rem);color:#fff;line-height:1.05;margin-bottom:.5rem;letter-spacing:.01em}
+.blog-preview{font-size:.875rem;color:var(--muted);line-height:1.6}
+.blog-toggle-btn{
+  width:34px;height:34px;border:1px solid var(--border);background:transparent;
+  color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;transition:all .2s;flex-shrink:0;margin-top:4px;
+}
+.blog-toggle-btn:hover{border-color:var(--teal);color:var(--teal);background:rgba(0,255,209,.08)}
+.blog-body{max-height:0;overflow:hidden;transition:max-height .6s ease}
+.blog-body.open{max-height:8000px}
+.blog-content{padding:0 2rem 2rem;border-top:1px solid var(--border)}
+.blog-content h3{
+  font-family:var(--mono);font-size:12px;color:var(--teal);letter-spacing:.1em;text-transform:uppercase;
+  margin:1.75rem 0 .75rem;display:flex;align-items:center;gap:.75rem;
+}
+.blog-content h3::after{content:'';flex:1;height:1px;background:var(--border)}
+.blog-content p{color:var(--muted);font-size:.92rem;line-height:1.85;margin-bottom:.9rem}
+.blog-content p strong{color:var(--text);font-weight:400}
+.blog-content ul{list-style:none;margin-bottom:1rem}
+.blog-content ul li{color:var(--muted);font-size:.92rem;padding:.3rem 0 .3rem 1.5rem;position:relative;line-height:1.6}
+.blog-content ul li::before{content:'▸';position:absolute;left:0;color:var(--teal);font-size:.75rem;top:.4rem}
+.blog-content ul li strong{color:var(--text);font-weight:400}
+.code-block{
+  background:#020408;border:1px solid rgba(0,255,209,.1);border-left:3px solid var(--teal);
+  padding:1.25rem 1.5rem;font-family:var(--mono);font-size:.77rem;color:#8ba3be;
+  overflow-x:auto;margin:.75rem 0;line-height:1.9;position:relative;
+}
+.code-block::before{
+  content:'CODE';position:absolute;top:8px;right:12px;
+  font-size:9px;color:rgba(0,255,209,.25);letter-spacing:.1em;
+}
+.cm{color:#2d4059;font-style:italic}.ck{color:#f472b6}.cs{color:#00ffd1}.cn{color:#ffb800}
+.blog-footer{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.25rem}
+.btag{font-family:var(--mono);font-size:10px;padding:3px 10px;border:1px solid rgba(255,255,255,.07);color:var(--muted);transition:all .2s}
+.btag:hover{border-color:var(--teal);color:var(--teal)}
 
-								<!-- Project 6 -->
-								<div class="project-card">
-									<img src="images/US_Complaints.jpg" alt="Project 6 Thumbnail">
-									<h3 style="font-weight: bold;">US Complaints Dashboard</h3>
-									<p style="font-size: 16px;">In US Complaints dashboard created in Tableau, I utilized advanced features like Level of Detail (LOD) calculations to analyze and visualize consumer complaints across sectors. This interactive tool showcases trends, frequencies, and geographical patterns, providing valuable insights for regulatory bodies and businesses to enhance customer satisfaction and operational efficiency.</p>
-									<a href="https://github.com/ish-g/US-Complaints-Dashboard?tab=readme-ov-file#readme" class="button" target="_blank">Read More</a>
-									<a href="https://public.tableau.com/app/profile/ishwar.gupta/viz/Assigment-3_17170928789310/Dashboard1" class="button" target="_blank">Dashboard</a>
-								</div>
-							</div>
-						</section>
+/* ARCH INTERACTIVE */
+.arch-tab{font-family:var(--mono);font-size:10px;padding:5px 12px;border:1px solid rgba(255,255,255,.08);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;letter-spacing:.08em;text-transform:uppercase}
+.arch-tab.active,.arch-tab:hover{border-color:var(--teal);color:var(--teal);background:rgba(0,255,209,.05)}
+.arch-row{display:flex;gap:.4rem;margin-bottom:.4rem;flex-wrap:wrap;transition:opacity .35s}
+.arch-row.dimmed{opacity:.08;pointer-events:none}
+.arch-box{flex:1;min-width:80px;padding:.6rem .75rem;border:1px solid;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.arch-box:hover{filter:brightness(1.3)}
+.arch-box .box-name{font-family:var(--mono);font-size:10px;font-weight:700;display:block}
+.arch-box .box-sub{font-family:var(--mono);font-size:9px;display:block;opacity:.55;margin-top:2px}
+.arch-box .box-bar{height:2px;position:absolute;bottom:0;left:0;width:0;transition:width .45s ease}
+.arch-row-label{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;width:70px;flex-shrink:0;display:flex;align-items:center;padding-right:.5rem;border-right:1px solid var(--border);margin-right:.25rem}
+.arch-connector{height:16px;padding-left:80px;display:flex;align-items:center}
+.arch-connector::before{content:'';display:block;width:1px;height:100%;background:rgba(0,255,209,.12)}
+.arch-info-panel{margin-top:.75rem;padding:.75rem 1rem;background:rgba(0,255,209,.04);border:1px solid rgba(0,255,209,.15);font-size:.85rem;color:var(--muted);display:none}
+.arch-info-title{font-family:var(--mono);font-size:11px;color:var(--teal);display:block;margin-bottom:.3rem}
 
-						<style>
-							.project-container {
-								display: flex;
-								flex-wrap: wrap;
-								justify-content: space-around;
-								margin-top: 30px;
-							}
+/* POWER APPS DIAGRAM */
+@keyframes papp-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes papp-floatR{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
+@keyframes papp-floatL{0%,100%{transform:translateX(0)}50%{transform:translateX(-5px)}}
+@keyframes papp-floatD{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
-							.project-card {
-								width: 45%;
-								margin: 20px;
-								padding: 15px;
-								text-align: center;
-								box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-							}
+/* ═══════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════ */
+#contact{background:var(--deep);position:relative;overflow:hidden}
+#contact::before{
+  content:'CONNECT';
+  font-family:var(--display);font-size:clamp(8rem,18vw,18rem);
+  color:transparent;-webkit-text-stroke:1px rgba(0,255,209,.04);
+  position:absolute;bottom:-2rem;right:-2rem;line-height:1;pointer-events:none;letter-spacing:-.02em;
+}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;position:relative;z-index:1}
+.contact-left h3{font-family:var(--display);font-size:2.5rem;color:#fff;line-height:1;margin-bottom:1.5rem}
+.contact-left p{color:var(--muted);font-size:1rem;line-height:1.8;margin-bottom:2rem}
+.contact-links{display:flex;flex-direction:column;gap:1px;background:var(--border)}
+.contact-link{
+  display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;
+  background:var(--card);text-decoration:none;transition:all .25s;
+  border-left:2px solid transparent;
+}
+.contact-link:hover{background:#0d1322;border-left-color:var(--teal)}
+.c-icon{width:34px;height:34px;border:1px solid rgba(0,255,209,.15);background:rgba(0,255,209,.05);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.c-label{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.c-val{font-size:.85rem;color:var(--text);margin-top:1px}
+.contact-form{background:var(--card);border:1px solid var(--border);padding:2.5rem;position:relative;overflow:hidden}
+.contact-form::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--teal),var(--orange),var(--gold));
+}
+.form-row{margin-bottom:1.25rem}
+.form-label{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:.5rem}
+.form-input{
+  width:100%;background:#030508;border:1px solid rgba(255,255,255,.08);color:var(--text);
+  padding:.8rem 1rem;font-family:var(--mono);font-size:.85rem;outline:none;transition:border-color .2s;
+}
+.form-input:focus{border-color:var(--teal);box-shadow:0 0 0 1px rgba(0,255,209,.1)}
+textarea.form-input{resize:vertical;min-height:110px}
+.form-btn{
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--teal);color:#000;border:none;padding:.85rem 2.5rem;cursor:pointer;
+  font-weight:700;width:100%;transition:all .25s;
+}
+.form-btn:hover{background:#00e0b8;box-shadow:0 0 30px rgba(0,255,209,.4)}
 
-							.project-card img {
-								max-width: 100%;
-								height: auto;
-								margin-bottom: 10px;
-							}
-						</style>
+footer{
+  border-top:1px solid var(--border);padding:1.5rem 3rem;
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--mono);font-size:11px;color:var(--muted);
+  background:var(--void);
+}
 
-						<!-- blogs -->
-						<section id="blogs" class="main special">
-							<header class="major">
-								<h2>My Blogs</h2>
-							</header>
-							<div class="blog-container">
+/* ═══════════════════════════════════════════
+   FADE IN ANIMATION
+═══════════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .8s ease,transform .8s ease}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-scale{opacity:0;transform:scale(.94);transition:opacity .7s ease,transform .7s ease}
+.reveal-scale.visible{opacity:1;transform:scale(1)}
 
-								<!-- blog 1 -->
-								<div class="blog-card">
-									<div class="blog-content">
-										<img src="images/blog-1.jpg" alt="Project 1 Thumbnail">
-										<div>
-											<h3 style="font-weight: bold;">Understanding the Difference Between Non-Parametric and Parametric Density Estimation on Non-Gaussian Distribution</h3>
-											<p style="font-size: 16px;">The distinctions between non-parametric and parametric density estimation methods for non-Gaussian data, highlighting their assumptions, advantages, and ideal use cases. It emphasizes the importance of choosing an approach based on domain knowledge, data characteristics, and specific analysis goals.</p>
-											<a href="https://medium.com/@ishwargupta4554/understanding-the-difference-between-non-parametric-and-parametric-density-estimation-for-197a3597e490" class="button" target="_blank">Read More</a>
-										</div>
-									</div>
-								</div>
+/* ═══════════════════════════════════════════
+   3D CARD TILT
+═══════════════════════════════════════════ */
+.tilt-card{transform-style:preserve-3d;transition:transform .1s ease}
 
-								<!-- blog 2 -->
-<!--								<div class="blog-card">-->
-<!--									<div class="blog-content">-->
-<!--										<img src="images/project2_thumbnail.jpg" alt="Project 2 Thumbnail">-->
-<!--										<div>-->
-<!--											<h3>Project 2 Name</h3>-->
-<!--											<p>Description line 1. Description line 2.</p>-->
-<!--											<a href="https://github.com/yourusername/project2" class="button" target="_blank">Read More</a>-->
-<!--										</div>-->
-<!--									</div>-->
-<!--								</div>-->
-							</div>
-						</section>
+@media(max-width:768px){
+  nav{padding:0 1.5rem}.nav-links{display:none}
+  .section{padding:5rem 1.5rem}
+  .about-layout,.exp-grid,.contact-grid{grid-template-columns:1fr}
+  .exp-sidebar{position:static;writing-mode:horizontal-tb;transform:none;border-right:none;border-bottom:1px solid var(--border);padding:0 0 1.5rem;margin-bottom:2rem}
+  .exp-sidebar-company{writing-mode:horizontal-tb;transform:none;font-size:2rem}
+  footer{flex-direction:column;gap:.5rem;text-align:center}
+  #hero{padding:0 1.5rem 4rem}
+}
+</style>
+</head>
+<body>
 
-						<style>
-							.blog-container {
-								display: flex;
-								flex-direction: column;
-								margin-top: 30px;
-							}
+<!-- CURSOR -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<div id="progress"></div>
 
-							.blog-card {
-								margin: 20px;
-								padding: 15px;
-								box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-							}
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">ig<span>/</span>dev</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Work</a></li>
+    <li><a href="#skills">Stack</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#blogs">Blogs</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1.5rem">
+    <div class="nav-status"><span class="nav-status-dot"></span>Available for roles</div>
+    <a href="#contact" class="nav-cta">Hire me</a>
+  </div>
+</nav>
 
-							.blog-card img {
-								max-width: 100%;
-								height: auto;
-								margin-bottom: 10px;
-							}
+<!-- HERO -->
+<section id="hero">
+  <canvas id="bg-canvas"></canvas>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Senior Data Engineer · Genesis Technologies · Noida, India</div>
+    <div class="hero-name">
+      <span class="glitch" data-text="ISHWAR">ISHWAR</span><br/>
+      <span class="glitch" data-text="GUPTA">GUPTA</span>
+    </div>
+    <div class="hero-bottom">
+      <div class="hero-role-block">
+        <div class="hero-role">
+          <span>Azure</span> · <span>Databricks</span> · <span>Snowflake</span><br/>
+          <span>PySpark</span> · <span>DBT</span> · <span>Delta Lake</span>
+          <br/><br/>
+          I build the invisible infrastructure that turns raw data chaos into revenue intelligence.
+        </div>
+        <div class="hero-btns">
+          <a href="#experience" class="btn btn-fill">↓ View my work</a>
+          <a href="#contact" class="btn btn-ghost">Let's talk</a>
+        </div>
+      </div>
+      <div class="hero-stats-row">
+        <div class="hero-stat">
+          <span class="hero-stat-num" id="count1">0</span>
+          <span class="hero-stat-label">Years experience</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num orange" id="count2">0</span>
+          <span class="hero-stat-label">Records / day</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num gold" id="count3">0</span>
+          <span class="hero-stat-label">Platform builds</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num" id="count4">0</span>
+          <span class="hero-stat-label">POS sources</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
 
-							.blog-content {
-								display: flex;
-								flex-direction: row;
-								align-items: center;
-							}
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="dot"></span> Azure Data Factory</span>
+    <span class="marquee-item"><span class="dot"></span> Databricks</span>
+    <span class="marquee-item"><span class="dot"></span> Snowflake</span>
+    <span class="marquee-item"><span class="dot"></span> PySpark</span>
+    <span class="marquee-item"><span class="dot"></span> DBT Core</span>
+    <span class="marquee-item"><span class="dot"></span> Delta Lake</span>
+    <span class="marquee-item"><span class="dot"></span> Medallion Architecture</span>
+    <span class="marquee-item"><span class="dot"></span> Unity Catalog</span>
+    <span class="marquee-item"><span class="dot"></span> Power BI</span>
+    <span class="marquee-item"><span class="dot"></span> Azure Synapse</span>
+    <span class="marquee-item"><span class="dot"></span> Apache Airflow</span>
+    <span class="marquee-item"><span class="dot"></span> MLflow</span>
+    <span class="marquee-item"><span class="dot"></span> ADLS Gen2</span>
+    <span class="marquee-item"><span class="dot"></span> Star Schema</span>
+    <span class="marquee-item"><span class="dot"></span> Power Apps</span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item"><span class="dot"></span> Azure Data Factory</span>
+    <span class="marquee-item"><span class="dot"></span> Databricks</span>
+    <span class="marquee-item"><span class="dot"></span> Snowflake</span>
+    <span class="marquee-item"><span class="dot"></span> PySpark</span>
+    <span class="marquee-item"><span class="dot"></span> DBT Core</span>
+    <span class="marquee-item"><span class="dot"></span> Delta Lake</span>
+    <span class="marquee-item"><span class="dot"></span> Medallion Architecture</span>
+    <span class="marquee-item"><span class="dot"></span> Unity Catalog</span>
+    <span class="marquee-item"><span class="dot"></span> Power BI</span>
+    <span class="marquee-item"><span class="dot"></span> Azure Synapse</span>
+    <span class="marquee-item"><span class="dot"></span> Apache Airflow</span>
+    <span class="marquee-item"><span class="dot"></span> MLflow</span>
+    <span class="marquee-item"><span class="dot"></span> ADLS Gen2</span>
+    <span class="marquee-item"><span class="dot"></span> Star Schema</span>
+    <span class="marquee-item"><span class="dot"></span> Power Apps</span>
+  </div>
+</div>
 
-							.blog-content > img {
-								margin-right: 20px;
-							}
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="section-num">01</div>
+  <div class="sec-label"><span class="bracket">[</span>01<span class="bracket">]</span> About</div>
+  <h2 class="sec-title">Building the pipes<br/>that move <em>billions</em></h2>
+  <div class="about-layout">
+    <div class="about-text reveal">
+      <p>I'm a <strong>Senior Data Engineer</strong> at Genesis Technologies — 4+ years of turning raw, messy, multi-source enterprise data into reliable gold-layer assets that executives actually trust.</p>
+      <p>I've shipped data infrastructure for <strong class="hl">global retail POS networks, sustainable forestry investment, healthcare distribution, and luxury CPG brands</strong>. Every project has the same obsession: clean architecture, zero-downtime pipelines, governed data that doesn't lie.</p>
+      <p>My specialty is the full Medallion stack — from designing the landing zone schema in ADLS to the final Snowflake Star Schema that feeds the C-suite dashboard. <strong>I don't just move data. I make it trustworthy.</strong></p>
+      <div class="about-stack">
+        <div class="stack-label">Full stack</div>
+        <div class="stack-grid">
+          <div class="stack-item"><span>Azure Data Factory</span></div>
+          <div class="stack-item"><span>Databricks</span></div>
+          <div class="stack-item"><span>Snowflake</span></div>
+          <div class="stack-item"><span>PySpark</span></div>
+          <div class="stack-item"><span>DBT Core</span></div>
+          <div class="stack-item"><span>Delta Lake</span></div>
+          <div class="stack-item"><span>Azure Synapse</span></div>
+          <div class="stack-item"><span>Power BI</span></div>
+          <div class="stack-item"><span>Unity Catalog</span></div>
+          <div class="stack-item"><span>Apache Airflow</span></div>
+          <div class="stack-item"><span>MLflow</span></div>
+          <div class="stack-item"><span>ADLS Gen2</span></div>
+          <div class="stack-item"><span>Python</span></div>
+          <div class="stack-item"><span>SQL</span></div>
+          <div class="stack-item"><span>Scala</span></div>
+          <div class="stack-item"><span>Power Apps</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="about-cards reveal">
+      <div class="about-card">
+        <div class="about-card-left">
+          <div class="about-card-tag">Current role</div>
+          <div class="about-card-val">Senior Data Engineer</div>
+          <div class="about-card-sub">Genesis Technologies · Jan 2022 – Present</div>
+        </div>
+        <div class="about-card-arrow">→</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-left">
+          <div class="about-card-tag">Education</div>
+          <div class="about-card-val">B.Tech · CGPA 8.2</div>
+          <div class="about-card-sub">AKTU Lucknow · 2018 – 2022</div>
+        </div>
+        <div class="about-card-arrow">→</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-left">
+          <div class="about-card-tag">Training</div>
+          <div class="about-card-val">Master in Data Science</div>
+          <div class="about-card-sub">DIGIPERFORM · 2023 – 2024</div>
+        </div>
+        <div class="about-card-arrow">→</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-left">
+          <div class="about-card-tag">Location</div>
+          <div class="about-card-val">Noida, India</div>
+          <div class="about-card-sub">Open to remote &amp; hybrid</div>
+        </div>
+        <div class="about-card-arrow">→</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-							.blog-content > div {
-								flex: 1;
-								text-align: left;
-							}
-						</style>
+<!-- EXPERIENCE -->
+<section id="experience" class="section">
+  <div class="section-num">02</div>
+  <div class="sec-label"><span class="bracket">[</span>02<span class="bracket">]</span> Work</div>
+  <h2 class="sec-title">5 projects.<br/><em>1 company.</em><br/><span class="orange">Countless pipelines.</span></h2>
+  <div class="exp-grid">
+    <div class="exp-sidebar reveal-left">
+      <div class="exp-sidebar-company">GENESIS</div>
+      <div class="exp-sidebar-date">JAN 2022 — PRESENT</div>
+      <div class="exp-sidebar-badge">● CURRENT</div>
+    </div>
+    <div class="exp-main">
+      <div class="proj-entry reveal tilt-card" onclick="toggleProj(this)">
+        <div class="proj-entry-header">
+          <div>
+            <div class="proj-entry-name">Project 01 — Global Retail</div>
+            <div class="proj-entry-title">SCOPE</div>
+          </div>
+          <div class="proj-entry-num">01</div>
+          <button class="proj-toggle">+</button>
+        </div>
+        <div class="proj-body">
+          <div class="proj-body-inner">
+            <ul class="proj-bullets">
+              <li>Led <strong>end-to-end ETL development</strong> integrating POS data from <strong>280+ global distributor sources</strong> using Azure Data Factory, Power Apps, and Logic Apps.</li>
+              <li>Designed and optimized <strong>SQL transforms, views, and stored procedures</strong> for high-performance data processing at scale.</li>
+              <li>Implemented <strong>FGAC with row-level security and column masking</strong> across SQL Server — zero unauthorized data exposure.</li>
+              <li>Delivered curated datasets powering <strong>enterprise Power BI KPI dashboards</strong> for global retail leadership.</li>
+              <li>Automated cross-functional workflows via <strong>Logic Apps and Power Apps</strong> — eliminated manual data entry across 3 departments.</li>
+            </ul>
+            <div class="proj-tags"><span class="ptag">ADF</span><span class="ptag">SQL Server</span><span class="ptag">Power BI</span><span class="ptag">Power Apps</span><span class="ptag">Logic Apps</span><span class="ptag">FGAC</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-entry reveal tilt-card" onclick="toggleProj(this)">
+        <div class="proj-entry-header">
+          <div>
+            <div class="proj-entry-name">Project 02 — Sustainable Investment</div>
+            <div class="proj-entry-title">NEW FORESTS</div>
+          </div>
+          <div class="proj-entry-num">02</div>
+          <button class="proj-toggle">+</button>
+        </div>
+        <div class="proj-body">
+          <div class="proj-body-inner">
+            <ul class="proj-bullets">
+              <li>Architected a <strong>Medallion Data Warehouse on Azure Synapse Analytics</strong> (Bronze → Silver → Gold) for sustainable forestry &amp; agriculture investment data.</li>
+              <li>Developed <strong>Synapse Pipelines and Spark notebooks</strong> transforming ADLS Gen2 data via Python, SQL, and DBT.</li>
+              <li>Built <strong>automated data quality validation and monitoring</strong> — pipeline reliability improved significantly.</li>
+              <li>Designed <strong>Power Apps + Power Automate</strong> for data validation and MDM workflows used by non-technical stakeholders.</li>
+            </ul>
+            <div class="proj-tags"><span class="ptag">Synapse Analytics</span><span class="ptag">ADLS Gen2</span><span class="ptag">DBT</span><span class="ptag">PySpark</span><span class="ptag">Power Automate</span><span class="ptag">Medallion</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-entry reveal tilt-card" onclick="toggleProj(this)">
+        <div class="proj-entry-header">
+          <div>
+            <div class="proj-entry-name">Project 03 — Near Real-Time</div>
+            <div class="proj-entry-title">DUSK</div>
+          </div>
+          <div class="proj-entry-num">03</div>
+          <button class="proj-toggle">+</button>
+        </div>
+        <div class="proj-body">
+          <div class="proj-body-inner">
+            <ul class="proj-bullets">
+              <li>Designed a <strong>near real-time ELT pipeline</strong> — Azure SQL Server to Snowflake, sub-hour data freshness for transactional data.</li>
+              <li>Built a <strong>scalable Star Schema in Snowflake Gold layer</strong> — fact + dim tables powering sales and purchase analytics dashboards.</li>
+              <li>Implemented <strong>SCD Type 1 and SCD Type 2</strong> across all dimension tables — full historical tracking with zero data loss.</li>
+            </ul>
+            <div class="proj-tags"><span class="ptag">Snowflake</span><span class="ptag">Azure SQL</span><span class="ptag">Star Schema</span><span class="ptag">SCD Type 1/2</span><span class="ptag">Power BI</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-entry reveal tilt-card" onclick="toggleProj(this)">
+        <div class="proj-entry-header">
+          <div>
+            <div class="proj-entry-name">Project 04 — Healthcare Distribution</div>
+            <div class="proj-entry-title">MEDTRITION</div>
+          </div>
+          <div class="proj-entry-num">04</div>
+          <button class="proj-toggle">+</button>
+        </div>
+        <div class="proj-body">
+          <div class="proj-body-inner">
+            <ul class="proj-bullets">
+              <li>Built <strong>ingestion pipelines for 30+ distributors</strong> handling heterogeneous CSV/Excel files via ADF, Databricks, and AWS Lambda.</li>
+              <li>Designed <strong>Dataflow transformation layers</strong> in Python + Pandas — standardized raw distributor data into analytics-ready formats.</li>
+              <li>Implemented <strong>Apache Airflow orchestration</strong> of Databricks jobs — custom sensors, retry logic, Slack alerting on failure.</li>
+            </ul>
+            <div class="proj-tags"><span class="ptag">Databricks</span><span class="ptag">AWS Lambda</span><span class="ptag">Airflow</span><span class="ptag">ADF</span><span class="ptag">Python</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-entry reveal tilt-card" onclick="toggleProj(this)">
+        <div class="proj-entry-header">
+          <div>
+            <div class="proj-entry-name">Project 05 — Enterprise CPG</div>
+            <div class="proj-entry-title">ESTEE LAUDER</div>
+          </div>
+          <div class="proj-entry-num">05</div>
+          <button class="proj-toggle">+</button>
+        </div>
+        <div class="proj-body">
+          <div class="proj-body-inner">
+            <ul class="proj-bullets">
+              <li>Developed <strong>Databricks notebooks and workflows</strong> for enterprise-grade processing across global business units.</li>
+              <li>Built <strong>event-driven ADF pipelines</strong> — trigger-based ingestion, dramatically reduced data availability latency.</li>
+              <li>Deployed <strong>MLflow ML pipelines</strong> for intelligent field-value prediction and automated data enrichment.</li>
+              <li>Architected <strong>Snowflake Star Schema with RBAC + Unity Catalog governance</strong> — secure enterprise BI integration.</li>
+            </ul>
+            <div class="proj-tags"><span class="ptag">Databricks</span><span class="ptag">MLflow</span><span class="ptag">ADF</span><span class="ptag">Snowflake</span><span class="ptag">RBAC</span><span class="ptag">Unity Catalog</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-						<!-- Contact info -->
-						<section id="cta" class="main special">
-							<header class="major">
-								<h2>Contact Info</h2>
-							</header>
-							<div class="contact-info-grid">
-								<div class="contact-info-item">
-									<img src="images/gmail.svg" alt="Email Icon" />
-									<strong>Email:</strong> <a href="mailto:ishwargupta4554@gmail.com">ishwargupta4554@gmail.com</a>
-								</div>
-								<div class="contact-info-item">
-									<img src="images/medium.svg" alt="Medium Icon" />
-									<strong>Medium:</strong> <a href="https://medium.com/@ishwargupta4554" target="_blank">@ishwargupta4554</a>
-								</div>
-								<div class="contact-info-item">
-									<img src="images/linkedin.svg" alt="LinkedIn Icon" />
-									<strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/ishwar-gupta-b3441b189/" target="_blank">ishwar-gupta-b3441b189</a>
-								</div>
-								<div class="contact-info-item">
-									<img src="images/phone.svg" alt="Phone Icon" />
-									<strong>Phone:</strong> +91 9012676900
-								</div>
-								<div class="contact-info-item">
-									<img src="images/github.svg" alt="GitHub Icon"/>
-									<strong>GitHub:</strong> <a href="https://github.com/ish-g" target="_blank">ish-g</a>
-								</div>
-								<div class="contact-info-item">
-									<img src="images/hackerrank.svg" alt="HackerRank Icon" />
-									<strong>HackerRank:</strong> <a href="https://www.hackerrank.com/profile/ishwargupta4554" target="_blank">@ishwargupta4554</a>
-								</div>
-							</div>
-						</section>
+<!-- SKILLS -->
+<section id="skills" class="section">
+  <div class="section-num">03</div>
+  <div class="sec-label"><span class="bracket">[</span>03<span class="bracket">]</span> Stack</div>
+  <h2 class="sec-title">Tools I <em>actually</em><br/>use in production</h2>
+  <div class="skills-terminal reveal">
+    <div class="terminal-bar">
+      <div class="t-dot red"></div>
+      <div class="t-dot yellow"></div>
+      <div class="t-dot green"></div>
+      <span class="t-title">ishwar@genesis:~$ skills --show-all --with-proficiency</span>
+    </div>
+    <div class="terminal-body">
+      <div class="skill-group">
+        <div class="skill-group-name">cloud-platforms</div>
+        <div class="skill-line"><span style="width:150px">Azure Data Factory</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="95"></div></div></div>
+        <div class="skill-line"><span style="width:150px">Azure Databricks</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="92"></div></div></div>
+        <div class="skill-line"><span style="width:150px">Snowflake</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="90"></div></div></div>
+        <div class="skill-line"><span style="width:150px">Azure Synapse</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="85"></div></div></div>
+        <div class="skill-line"><span style="width:150px">ADLS Gen2</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="93"></div></div></div>
+        <div class="skill-line"><span style="width:150px">Microsoft Fabric</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="70"></div></div></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">data-engineering</div>
+        <div class="skill-line"><span style="width:150px">Medallion Arch.</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="97"></div></div></div>
+        <div class="skill-line"><span style="width:150px">Delta Lake</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="92"></div></div></div>
+        <div class="skill-line"><span style="width:150px">DBT Core</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="88"></div></div></div>
+        <div class="skill-line"><span style="width:150px">Star Schema / SCD</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="94"></div></div></div>
+        <div class="skill-line"><span style="width:150px">Apache Airflow</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="82"></div></div></div>
+        <div class="skill-line"><span style="width:150px">ETL / ELT Design</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="96"></div></div></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">programming</div>
+        <div class="skill-line"><span style="width:150px">PySpark</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="90"></div></div></div>
+        <div class="skill-line"><span style="width:150px">Python</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="92"></div></div></div>
+        <div class="skill-line"><span style="width:150px">SQL</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="95"></div></div></div>
+        <div class="skill-line"><span style="width:150px">Pandas</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="88"></div></div></div>
+        <div class="skill-line"><span style="width:150px">Scala</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="65"></div></div></div>
+        <div class="skill-line"><span style="width:150px">Scikit-learn</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="78"></div></div></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">governance &amp; bi</div>
+        <div class="skill-line"><span style="width:150px">Unity Catalog</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="85"></div></div></div>
+        <div class="skill-line"><span style="width:150px">RBAC</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="90"></div></div></div>
+        <div class="skill-line"><span style="width:150px">Power BI</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="88"></div></div></div>
+        <div class="skill-line"><span style="width:150px">Power Apps</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="82"></div></div></div>
+        <div class="skill-line"><span style="width:150px">CI/CD (DevOps)</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="85"></div></div></div>
+        <div class="skill-line"><span style="width:150px">MLflow</span><div class="skill-bar-track"><div class="skill-bar-fill" data-w="78"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-						<!-- Additional styles for Contact Info -->
-						<style>
-							.contact-info-grid {
-								display: flex;
-								flex-wrap: wrap;
-								justify-content: space-between;
-							}
+<!-- PROJECTS -->
+<section id="projects" class="section" style="padding-right:0">
+  <div class="section-num">04</div>
+  <div class="sec-label" style="padding-right:3rem"><span class="bracket">[</span>04<span class="bracket">]</span> Projects</div>
+  <h2 class="sec-title" style="padding-right:3rem">Things I've <em>shipped</em><br/><span class="gold">outside work</span></h2>
+  <div class="projects-scroll-hint">Drag to explore</div>
+  <div class="projects-track" id="drag-track">
+    <div class="proj-card tilt-card reveal-scale">
+      <div class="proj-card-img"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#00ffd1" stroke-width="1" opacity=".4"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <div class="proj-body">
+        <div class="proj-label">ML / MLOps · Capstone</div>
+        <div class="proj-title">SmartEstateHub</div>
+        <div class="proj-desc">Real estate analytics platform — price prediction, recommendation engine, interactive map visualizations. Full ML pipeline to Streamlit.</div>
+        <div class="proj-card-tags"><span class="ptag">Python</span><span class="ptag">Scikit-learn</span><span class="ptag">Streamlit</span><span class="ptag">MLOps</span></div>
+        <div class="proj-links"><a href="https://github.com/ish-g/SmartEstateHub" class="proj-link" target="_blank">GitHub ↗</a><a href="https://smartestateapp.streamlit.app/" class="proj-link" target="_blank">Live ↗</a></div>
+      </div>
+    </div>
+    <div class="proj-card tilt-card reveal-scale">
+      <div class="proj-card-img"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#ffb800" stroke-width="1" opacity=".4"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+      <div class="proj-body">
+        <div class="proj-label">Recommendation System</div>
+        <div class="proj-title">Movie Recommender</div>
+        <div class="proj-desc">Content-based and collaborative filtering. Analyzes user preferences and movie metadata for personalized suggestions via TMDB API.</div>
+        <div class="proj-card-tags"><span class="ptag">Python</span><span class="ptag">NLP</span><span class="ptag">Cosine Sim</span><span class="ptag">Streamlit</span></div>
+        <div class="proj-links"><a href="https://github.com/ish-g/ML_P2_Movie-Recommender-System" class="proj-link" target="_blank">GitHub ↗</a><a href="https://mlp2movie-recommender-system-x69tdzudaoermgv8bjarjw.streamlit.app/" class="proj-link" target="_blank">Live ↗</a></div>
+      </div>
+    </div>
+    <div class="proj-card tilt-card reveal-scale">
+      <div class="proj-card-img"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="1" opacity=".4"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10"/></svg></div>
+      <div class="proj-body">
+        <div class="proj-label">Sports Analytics</div>
+        <div class="proj-title">IPL Analytics</div>
+        <div class="proj-desc">Cricket analytics — player trends, team strategies, win probability, head-to-head stats. Advanced Plotly + Streamlit visualizations.</div>
+        <div class="proj-card-tags"><span class="ptag">Python</span><span class="ptag">Pandas</span><span class="ptag">Plotly</span><span class="ptag">EDA</span></div>
+        <div class="proj-links"><a href="https://github.com/ish-g/Cricket_Analysis_IPL" class="proj-link" target="_blank">GitHub ↗</a><a href="https://cricketanalysisipl.streamlit.app/" class="proj-link" target="_blank">Live ↗</a></div>
+      </div>
+    </div>
+    <div class="proj-card tilt-card reveal-scale">
+      <div class="proj-card-img"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="1" opacity=".4"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+      <div class="proj-body">
+        <div class="proj-label">HR Analytics · Tableau</div>
+        <div class="proj-title">HR Dashboard</div>
+        <div class="proj-desc">Turnover rates, performance evaluations, NLP sentiment analysis from employee feedback. Interactive Tableau visualizations.</div>
+        <div class="proj-card-tags"><span class="ptag">Tableau</span><span class="ptag">Python</span><span class="ptag">NLP</span><span class="ptag">Sentiment</span></div>
+        <div class="proj-links"><a href="https://github.com/ish-g/HR-Analytics-Dashboard" class="proj-link" target="_blank">GitHub ↗</a><a href="https://public.tableau.com/app/profile/ishwar.gupta/viz/HRAnalyticalDashboard_17166495470000/HRAnalyticsDashboard" class="proj-link" target="_blank">Live ↗</a></div>
+      </div>
+    </div>
+    <div class="proj-card tilt-card reveal-scale">
+      <div class="proj-card-img"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#00ffd1" stroke-width="1" opacity=".4"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+      <div class="proj-body">
+        <div class="proj-label">Census Analytics · Geo</div>
+        <div class="proj-title">India Census</div>
+        <div class="proj-desc">Population trends, literacy rates, gender distribution. Choropleth maps and statistical visualizations from India census data.</div>
+        <div class="proj-card-tags"><span class="ptag">Python</span><span class="ptag">Plotly</span><span class="ptag">Streamlit</span><span class="ptag">Geo</span></div>
+        <div class="proj-links"><a href="https://github.com/ish-g/Streamlit_Plotly-India_Cencus_Dashboard" class="proj-link" target="_blank">GitHub ↗</a><a href="https://ish-g-streamlit-plotly-india-cencus-dashboard-app-1m6tcu.streamlit.app/" class="proj-link" target="_blank">Live ↗</a></div>
+      </div>
+    </div>
+    <div class="proj-card tilt-card reveal-scale">
+      <div class="proj-card-img"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#ff6b2b" stroke-width="1" opacity=".4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+      <div class="proj-body">
+        <div class="proj-label">Consumer Analytics</div>
+        <div class="proj-title">US Complaints</div>
+        <div class="proj-desc">Advanced Tableau dashboard with LOD calculations — frequency trends, geographic heatmaps, resolution patterns at scale.</div>
+        <div class="proj-card-tags"><span class="ptag">Tableau</span><span class="ptag">LOD Calc</span><span class="ptag">Data Viz</span></div>
+        <div class="proj-links"><a href="https://github.com/ish-g/US-Complaints-Dashboard" class="proj-link" target="_blank">GitHub ↗</a><a href="https://public.tableau.com/app/profile/ishwar.gupta/viz/Assigment-3_17170928789310/Dashboard1" class="proj-link" target="_blank">Live ↗</a></div>
+      </div>
+    </div>
+    <!-- spacer -->
+    <div style="flex-shrink:0;width:1.5rem"></div>
+  </div>
+</section>
 
-							.contact-info-item {
-								width: calc(33.33% - 20px); /* Adjust the width as needed */
-								margin-bottom: 20px;
-								text-align: center;
-							}
-						</style>
-					</div>
+<!-- CERTIFICATIONS -->
+<section id="certifications" class="section">
+  <div class="section-num">05</div>
+  <div class="sec-label"><span class="bracket">[</span>05<span class="bracket">]</span> Credentials</div>
+  <h2 class="sec-title">Certified <em>expertise</em></h2>
+  <div class="certs-grid reveal">
+    <div class="cert-card">
+      <span class="cert-icon">🏛</span>
+      <div class="cert-name">Intro to Data Science</div>
+      <div class="cert-issuer">CISCO · Credly</div>
+      <a class="cert-link" href="https://www.credly.com/badges/8464d6f4-cdf8-445f-b428-463254082086/linked_in_profile" target="_blank">View credential →</a>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">📊</span>
+      <div class="cert-name">Business Analytics with Excel</div>
+      <div class="cert-issuer">Simplilearn</div>
+      <a class="cert-link" href="https://www.simplilearn.com/skillup-certificate-landing?token=eyJjb3Vyc2VfaWQiOiI2NjQiLCJjZXJ0aWZpY2F0ZV91cmwiOiJodHRwczpcL1wvY2VydGlmaWNhdGVzLnNpbXBsaWNkbi5uZXRcL3NoYXJlXC90aHVtYl80ODYwMzU0XzE3MDc0MDU0NjcucG5nIiwidXNlcm5hbWUiOiJJc2h3YXIgR3VwdGEifQ%3D%3D&amp;utm_source=shared-certificate" target="_blank">View credential →</a>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">🐍</span>
+      <div class="cert-name">Python (Problem Solving)</div>
+      <div class="cert-issuer">HackerRank</div>
+      <a class="cert-link" href="https://www.hackerrank.com/certificates/5616582bdaf3" target="_blank">View credential →</a>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">🗄️</span>
+      <div class="cert-name">SQL Intermediate</div>
+      <div class="cert-issuer">HackerRank</div>
+      <a class="cert-link" href="https://www.hackerrank.com/certificates/7053d3aa322a" target="_blank">View credential →</a>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">🎓</span>
+      <div class="cert-name">Master in Data Science</div>
+      <div class="cert-issuer">DIGIPERFORM · 2023–2024</div>
+      <span class="cert-link" style="cursor:default;border-color:transparent;color:var(--muted)">Python · ML · Statistics</span>
+    </div>
+  </div>
+</section>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<p class="copyright">&copy; Created by Ishwar Gupta</a>.</p>
-					</footer>
+<!-- BLOGS -->
+<section id="blogs" class="section">
+  <div class="section-num">06</div>
+  <div class="sec-label"><span class="bracket">[</span>06<span class="bracket">]</span> Knowledge</div>
+  <h2 class="sec-title">Deep dives<br/>worth <em>reading</em></h2>
+  <div class="blogs-layout">
 
-			</div>
+    <div class="blog-item reveal">
+      <div class="blog-header" onclick="toggleBlog(this)">
+        <div class="blog-meta">
+          <div class="blog-num">01</div>
+          <div class="blog-cat">Architecture · Lakehouse</div>
+          <div class="blog-title">Medallion Architecture on Azure Databricks</div>
+          <div class="blog-preview">Bronze, Silver, Gold — the definitive guide to how I've applied this pattern at scale across 5 enterprise platforms.</div>
+        </div>
+        <button class="blog-toggle-btn">+</button>
+      </div>
+      <div class="blog-body">
+        <div class="blog-content">
+          <h3>What is Medallion?</h3>
+          <p>Three quality layers — <strong>Bronze, Silver, Gold</strong>. Raw data arrives in Bronze, gets cleaned and validated in Silver, and is modeled for BI consumption in Gold. The principle: separate ingestion, quality, and consumption concerns completely.</p>
+          <h3>Bronze — zero transformation, full fidelity</h3>
+          <p>Data arrives exactly as-is. Schema-on-read. Every file timestamped, partitioned, and preserved forever. ADF orchestrates flows into Delta format on ADLS Gen2. <strong>Never delete Bronze</strong> — it's your reprocessing safety net.</p>
+          <div class="code-block"><span class="cm"># Bronze ingestion — Delta + metadata columns</span>
+df_raw = spark.read.option(<span class="cs">"header"</span>, <span class="cs">"true"</span>).csv(<span class="cs">"abfss://landing@adls.dfs.core.windows.net/pos/"</span>)
+df_raw \
+  .withColumn(<span class="cs">"_ingestion_ts"</span>, F.current_timestamp()) \
+  .withColumn(<span class="cs">"_source_file"</span>, F.input_file_name()) \
+  .write.format(<span class="cs">"delta"</span>).mode(<span class="cs">"append"</span>) \
+  .partitionBy(<span class="cs">"source_id"</span>, <span class="cs">"load_date"</span>) \
+  .save(<span class="cs">"abfss://bronze@adls.dfs.core.windows.net/pos_data/"</span>)</div>
+          <h3>Silver — SCD Type 2 merge</h3>
+          <div class="code-block">DeltaTable.forPath(spark, silver_path).alias(<span class="cs">"target"</span>) \
+  .merge(df_updates.alias(<span class="cs">"source"</span>), <span class="cs">"target.id = source.id AND target.is_current = true"</span>) \
+  .whenMatchedUpdate(
+    condition=<span class="cs">"source.updated_at > target.updated_at"</span>,
+    set={<span class="cs">"is_current"</span>: <span class="cs">"false"</span>, <span class="cs">"end_date"</span>: <span class="cs">"source.updated_at"</span>}
+  ).whenNotMatchedInsertAll().execute()</div>
+          <h3>Gold — DBT Star Schema model</h3>
+          <div class="code-block"><span class="ck">SELECT</span> s.sale_date, p.product_key, d.distributor_key,
+    <span class="cn">SUM</span>(s.quantity) <span class="ck">AS</span> total_units, <span class="cn">SUM</span>(s.revenue) <span class="ck">AS</span> total_revenue
+<span class="ck">FROM</span> {{ ref(<span class="cs">'silver_pos_cleaned'</span>) }} s
+<span class="ck">JOIN</span> {{ ref(<span class="cs">'dim_product'</span>) }} p <span class="ck">ON</span> s.product_id = p.product_id
+<span class="ck">JOIN</span> {{ ref(<span class="cs">'dim_distributor'</span>) }} d <span class="ck">ON</span> s.dist_id = d.dist_id
+<span class="ck">GROUP BY</span> <span class="cn">1</span>,<span class="cn">2</span>,<span class="cn">3</span></div>
+          <div class="blog-footer"><span class="btag">Medallion</span><span class="btag">Databricks</span><span class="btag">Delta Lake</span><span class="btag">DBT</span><span class="btag">Lakehouse</span></div>
+        </div>
+      </div>
+    </div>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+    <div class="blog-item reveal">
+      <div class="blog-header" onclick="toggleBlog(this)">
+        <div class="blog-meta">
+          <div class="blog-num">02</div>
+          <div class="blog-cat">Data Modeling · Warehouse</div>
+          <div class="blog-title">Star Schema &amp; SCD Types: The Practical Guide</div>
+          <div class="blog-preview">Dimensional modeling isn't just theory. How I design fact and dim tables for real-world warehouses on Snowflake and Synapse.</div>
+        </div>
+        <button class="blog-toggle-btn">+</button>
+      </div>
+      <div class="blog-body">
+        <div class="blog-content">
+          <h3>Why Star Schema?</h3>
+          <p>Central fact table surrounded by denormalized dimensions. <strong>Optimized for query speed and human readability.</strong> Power BI, Tableau, and Snowflake all perform best against star schemas. Normalized = correct. Denormalized = fast. Gold layer = denormalized.</p>
+          <h3>Fact table — Snowflake Gold</h3>
+          <div class="code-block"><span class="ck">CREATE OR REPLACE TABLE</span> gold.fct_sales (
+    sale_sk         NUMBER AUTOINCREMENT <span class="ck">PRIMARY KEY</span>,
+    date_key        NUMBER <span class="ck">NOT NULL</span>,    product_key NUMBER <span class="ck">NOT NULL</span>,
+    distributor_key NUMBER <span class="ck">NOT NULL</span>,   region_key  NUMBER <span class="ck">NOT NULL</span>,
+    quantity_sold   NUMBER(10,2),        revenue_usd NUMBER(14,4)
+) <span class="ck">CLUSTER BY</span> (date_key, region_key);</div>
+          <h3>SCD Type 1 vs Type 2</h3>
+          <div class="code-block"><span class="cm">-- SCD Type 1: simple overwrite (no history)</span>
+<span class="ck">MERGE INTO</span> dim_product <span class="ck">AS</span> t <span class="ck">USING</span> silver.updates <span class="ck">AS</span> s <span class="ck">ON</span> t.product_id = s.product_id
+<span class="ck">WHEN MATCHED THEN UPDATE SET</span> t.product_name = s.product_name
 
-	</body>
+<span class="cm">-- SCD Type 2: full history (is_current + effective dates)</span>
+<span class="ck">CREATE TABLE</span> dim_distributor (
+    distributor_sk NUMBER AUTOINCREMENT, distributor_id VARCHAR(50),
+    tier           VARCHAR(50),          effective_from DATE,
+    effective_to   DATE,                 is_current BOOLEAN <span class="ck">DEFAULT TRUE</span>
+);</div>
+          <div class="blog-footer"><span class="btag">Star Schema</span><span class="btag">SCD Type 1/2</span><span class="btag">Snowflake</span><span class="btag">Dimensional Modeling</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="blog-item reveal">
+      <div class="blog-header" onclick="toggleBlog(this)">
+        <div class="blog-meta">
+          <div class="blog-num">03</div>
+          <div class="blog-cat">PySpark · Performance</div>
+          <div class="blog-title">PySpark Optimization Patterns I Use in Production</div>
+          <div class="blog-preview">Processing 1B+ records daily. Here's what actually makes the difference between a job that runs in 4 minutes vs 4 hours.</div>
+        </div>
+        <button class="blog-toggle-btn">+</button>
+      </div>
+      <div class="blog-body">
+        <div class="blog-content">
+          <h3>1. AQE + salting for data skew</h3>
+          <div class="code-block">spark.conf.set(<span class="cs">"spark.sql.adaptive.enabled"</span>, <span class="cn">"true"</span>)
+spark.conf.set(<span class="cs">"spark.sql.adaptive.skewJoin.enabled"</span>, <span class="cn">"true"</span>)
+<span class="cm"># Manual salting for extreme skew</span>
+df = df.withColumn(<span class="cs">"join_key_salted"</span>, F.concat(<span class="cs">"join_key"</span>, F.lit(<span class="cs">"_"</span>), (F.rand()*<span class="cn">10</span>).cast(<span class="cs">"int"</span>)))</div>
+          <h3>2. Smart caching + broadcast joins</h3>
+          <div class="code-block">large_df.cache()
+large_df.count()  <span class="cm"># materialize</span>
+apac = large_df.filter(F.col(<span class="cs">"region"</span>)==<span class="cs">"APAC"</span>).agg(...)
+emea = large_df.filter(F.col(<span class="cs">"region"</span>)==<span class="cs">"EMEA"</span>).agg(...)
+large_df.unpersist()
+result = fact.join(broadcast(dim), on=<span class="cs">"product_id"</span>)  <span class="cm"># zero shuffle</span></div>
+          <h3>3. Delta Z-Ordering + VACUUM</h3>
+          <div class="code-block">DeltaTable.forPath(spark, <span class="cs">"/gold/fct_sales"</span>) \
+  .optimize().executeZOrderBy(<span class="cs">"sale_date"</span>, <span class="cs">"region_key"</span>)
+DeltaTable.forPath(spark, <span class="cs">"/gold/fct_sales"</span>).vacuum(<span class="cn">168</span>)</div>
+          <div class="blog-footer"><span class="btag">PySpark</span><span class="btag">Databricks</span><span class="btag">AQE</span><span class="btag">Delta Lake</span><span class="btag">Performance</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="blog-item reveal">
+      <div class="blog-header" onclick="toggleBlog(this)">
+        <div class="blog-meta">
+          <div class="blog-num">04</div>
+          <div class="blog-cat">Power Platform · Low-Code</div>
+          <div class="blog-title">Power Apps for Data Engineers: Workflows Non-Tech Teams Love</div>
+          <div class="blog-preview">Power Apps + Power Automate wired to SQL and Dataverse becomes a serious enterprise workflow layer. Here's the full pattern.</div>
+        </div>
+        <button class="blog-toggle-btn">+</button>
+      </div>
+      <div class="blog-body">
+        <div class="blog-content">
+          <h3>Why Power Apps?</h3>
+          <p>My job doesn't end at pipelines. Business users need to <strong>validate data, manage master records, trigger workflows</strong> — without touching Azure Portal. I built multi-screen validation apps on SCOPE, New Forests, and Medtrition.</p>
+
+          <div style="position:relative;height:210px;margin:1.5rem 0;border:1px solid rgba(0,255,209,.12);background:var(--card);overflow:hidden">
+            <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:88px;height:88px;border-radius:50%;background:rgba(0,255,209,.08);border:2px solid var(--teal);display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 0 30px rgba(0,255,209,.15)">
+              <div style="font-family:var(--mono);font-size:9px;color:var(--teal);text-align:center;line-height:1.5">Power<br/>Apps</div>
+            </div>
+            <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);width:78px;height:60px;display:flex;align-items:center;justify-content:center;animation:papp-float 2.2s ease-in-out infinite">
+              <div style="width:74px;height:56px;border:1px solid #ff6b2b;background:rgba(8,12,20,.95);display:flex;align-items:center;justify-content:center;border-radius:3px">
+                <div style="font-family:var(--mono);font-size:9px;color:#ff6b2b;text-align:center;line-height:1.4">Power<br/>Automate</div>
+              </div>
+            </div>
+            <div style="position:absolute;top:50%;right:14px;transform:translateY(-50%);width:78px;height:60px;display:flex;align-items:center;justify-content:center;animation:papp-floatR 2.6s ease-in-out infinite .4s">
+              <div style="width:74px;height:56px;border:1px solid #a855f7;background:rgba(8,12,20,.95);display:flex;align-items:center;justify-content:center;border-radius:3px">
+                <div style="font-family:var(--mono);font-size:9px;color:#a855f7;text-align:center;line-height:1.4">Dataverse<br/>SQL</div>
+              </div>
+            </div>
+            <div style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);width:78px;height:60px;display:flex;align-items:center;justify-content:center;animation:papp-floatD 2s ease-in-out infinite .8s">
+              <div style="width:74px;height:56px;border:1px solid var(--red);background:rgba(8,12,20,.95);display:flex;align-items:center;justify-content:center;border-radius:3px">
+                <div style="font-family:var(--mono);font-size:9px;color:var(--red);text-align:center;line-height:1.4">Power<br/>BI</div>
+              </div>
+            </div>
+            <div style="position:absolute;top:50%;left:14px;transform:translateY(-50%);width:78px;height:60px;display:flex;align-items:center;justify-content:center;animation:papp-floatL 2.4s ease-in-out infinite .2s">
+              <div style="width:74px;height:56px;border:1px solid #22c55e;background:rgba(8,12,20,.95);display:flex;align-items:center;justify-content:center;border-radius:3px">
+                <div style="font-family:var(--mono);font-size:9px;color:#22c55e;text-align:center;line-height:1.4">SharePoint<br/>Teams</div>
+              </div>
+            </div>
+            <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none" viewBox="0 0 400 210">
+              <line x1="200" y1="105" x2="200" y2="74" stroke="#ff6b2b" stroke-width="1" stroke-dasharray="4 3" opacity=".35"/>
+              <line x1="200" y1="105" x2="322" y2="105" stroke="#a855f7" stroke-width="1" stroke-dasharray="4 3" opacity=".35"/>
+              <line x1="200" y1="105" x2="200" y2="136" stroke="var(--red)" stroke-width="1" stroke-dasharray="4 3" opacity=".35"/>
+              <line x1="200" y1="105" x2="78" y2="105" stroke="#22c55e" stroke-width="1" stroke-dasharray="4 3" opacity=".35"/>
+            </svg>
+          </div>
+
+          <h3>New Forests validation app — 3 screens</h3>
+          <ul>
+            <li><strong>Screen 1</strong> — Dashboard: pending records, color-coded by quality score</li>
+            <li><strong>Screen 2</strong> — Record detail: field comparison (new vs historical)</li>
+            <li><strong>Screen 3</strong> — Approval: triggers Power Automate → updates Silver → fires ADF pipeline</li>
+          </ul>
+          <div class="code-block"><span class="cm">// Gallery filter + Patch + Automate trigger</span>
+Filter(SilverRecords, validation_status = <span class="cs">"PENDING"</span> &amp;&amp; region <span class="ck">in</span> User().Department)
+Patch(SilverRecords, LookUp(SilverRecords, record_id = selectedId),
+    {validation_status: <span class="cs">"APPROVED"</span>, approved_by: User().Email});
+PowerAutomateFlow.Run(selectedId, <span class="cs">"APPROVED"</span>, commentInput.Text)</div>
+          <div class="blog-footer"><span class="btag">Power Apps</span><span class="btag">Power Automate</span><span class="btag">Low-Code</span><span class="btag">Data Quality</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="blog-item reveal">
+      <div class="blog-header" onclick="toggleBlog(this)">
+        <div class="blog-meta">
+          <div class="blog-num">05</div>
+          <div class="blog-cat">Architecture · Interactive Diagram</div>
+          <div class="blog-title">Modern Data Warehouse on Azure: Every Layer, Every Tool — Clickable</div>
+          <div class="blog-preview">Complete 5-layer architecture. Click any tab to isolate a layer. Click any component to see exactly what it does and why.</div>
+        </div>
+        <button class="blog-toggle-btn">+</button>
+      </div>
+      <div class="blog-body">
+        <div class="blog-content">
+          <h3>Click a layer, then click any box</h3>
+          <div id="arch-blog" style="margin:1rem 0">
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem">
+              <button class="arch-tab active" onclick="archLayer(this,'all')">All</button>
+              <button class="arch-tab" onclick="archLayer(this,'ingest')">Ingestion</button>
+              <button class="arch-tab" onclick="archLayer(this,'store')">Storage</button>
+              <button class="arch-tab" onclick="archLayer(this,'transform')">Transform</button>
+              <button class="arch-tab" onclick="archLayer(this,'govern')">Governance</button>
+              <button class="arch-tab" onclick="archLayer(this,'consume')">Consume</button>
+            </div>
+            <div id="arch-rows">
+              <div class="arch-row" data-layer="ingest">
+                <div class="arch-row-label">Ingest</div>
+                <div class="arch-box" style="color:#ff6b2b;border-color:rgba(255,107,43,.25);background:rgba(255,107,43,.04)" onclick="archInfo(this,'Azure Data Factory','Orchestrates all batch and trigger-based copy activities. 90+ connectors. Used on all 5 projects for ingestion from SQL, SharePoint, APIs, FTP sources.')"><span class="box-name">ADF</span><span class="box-sub">Batch pipelines</span><div class="box-bar" style="background:#ff6b2b"></div></div>
+                <div class="arch-box" style="color:#ff6b2b;border-color:rgba(255,107,43,.25);background:rgba(255,107,43,.04)" onclick="archInfo(this,'Event Hub','High-throughput real-time event streaming. Millions of events/sec. Near-real-time POS data feeds in DUSK project.')"><span class="box-name">Event Hub</span><span class="box-sub">Real-time stream</span><div class="box-bar" style="background:#ff6b2b"></div></div>
+                <div class="arch-box" style="color:#ff6b2b;border-color:rgba(255,107,43,.25);background:rgba(255,107,43,.04)" onclick="archInfo(this,'Azure Functions','Serverless event-driven processing — file pickup, validation triggers. Used in Medtrition for 30+ distributor file automation.')"><span class="box-name">Functions</span><span class="box-sub">Serverless</span><div class="box-bar" style="background:#ff6b2b"></div></div>
+                <div class="arch-box" style="color:#ff6b2b;border-color:rgba(255,107,43,.25);background:rgba(255,107,43,.04)" onclick="archInfo(this,'Logic Apps','Automated workflows — email alerts, Teams notifications, SLA breach triggers. Low-code, enterprise-grade reliability.')"><span class="box-name">Logic Apps</span><span class="box-sub">Automation</span><div class="box-bar" style="background:#ff6b2b"></div></div>
+              </div>
+              <div class="arch-connector"></div>
+              <div class="arch-row" data-layer="store">
+                <div class="arch-row-label">Storage</div>
+                <div class="arch-box" style="color:#a855f7;border-color:rgba(168,85,247,.25);background:rgba(168,85,247,.04)" onclick="archInfo(this,'ADLS Gen2','Petabyte-scale data lake. Hierarchical namespace. Zone-redundant. Landing zone and all Bronze/Silver/Gold Delta tables.')"><span class="box-name">ADLS Gen2</span><span class="box-sub">Data Lake</span><div class="box-bar" style="background:#a855f7"></div></div>
+                <div class="arch-box" style="color:#a855f7;border-color:rgba(168,85,247,.25);background:rgba(168,85,247,.04)" onclick="archInfo(this,'Delta Lake','ACID transactions, time-travel, schema evolution on ADLS. Every Bronze/Silver table is Delta — enables safe reprocessing without data loss.')"><span class="box-name">Delta Lake</span><span class="box-sub">ACID · Time-travel</span><div class="box-bar" style="background:#a855f7"></div></div>
+                <div class="arch-box" style="color:#a855f7;border-color:rgba(168,85,247,.25);background:rgba(168,85,247,.04)" onclick="archInfo(this,'Snowflake','Cloud data warehouse for Gold layer. Columnar storage, virtual warehouses, near-unlimited concurrency. DUSK and Estee Lauder.')"><span class="box-name">Snowflake</span><span class="box-sub">Gold warehouse</span><div class="box-bar" style="background:#a855f7"></div></div>
+                <div class="arch-box" style="color:#a855f7;border-color:rgba(168,85,247,.25);background:rgba(168,85,247,.04)" onclick="archInfo(this,'Azure Synapse','Enterprise SQL pool for massive analytical queries. 100M+ row forestry investment data on New Forests. Deep Azure integration.')"><span class="box-name">Synapse</span><span class="box-sub">Enterprise SQL</span><div class="box-bar" style="background:#a855f7"></div></div>
+              </div>
+              <div class="arch-connector"></div>
+              <div class="arch-row" data-layer="transform">
+                <div class="arch-row-label">Transform</div>
+                <div class="arch-box" style="color:#00ffd1;border-color:rgba(0,255,209,.2);background:rgba(0,255,209,.03)" onclick="archInfo(this,'Azure Databricks','Apache Spark on Azure. PySpark notebooks for complex transforms, ML, streaming. Core Silver compute engine across all 5 projects.')"><span class="box-name">Databricks</span><span class="box-sub">PySpark</span><div class="box-bar" style="background:#00ffd1"></div></div>
+                <div class="arch-box" style="color:#00ffd1;border-color:rgba(0,255,209,.2);background:rgba(0,255,209,.03)" onclick="archInfo(this,'DBT Core','Version-controlled SQL transforms. Modular models, schema tests, auto-docs. CI/CD via Azure DevOps — zero manual deployments.')"><span class="box-name">DBT Core</span><span class="box-sub">SQL · Tests</span><div class="box-bar" style="background:#00ffd1"></div></div>
+                <div class="arch-box" style="color:#00ffd1;border-color:rgba(0,255,209,.2);background:rgba(0,255,209,.03)" onclick="archInfo(this,'Apache Airflow','DAG orchestration of Databricks jobs. Custom sensors, retry logic, Slack alerting on failure. Medtrition project.')"><span class="box-name">Airflow</span><span class="box-sub">DAG orchestration</span><div class="box-bar" style="background:#00ffd1"></div></div>
+                <div class="arch-box" style="color:#00ffd1;border-color:rgba(0,255,209,.2);background:rgba(0,255,209,.03)" onclick="archInfo(this,'MLflow','ML experiment tracking, model registry, deployment on Databricks. Field-value prediction and enrichment in Estee Lauder.')"><span class="box-name">MLflow</span><span class="box-sub">ML lifecycle</span><div class="box-bar" style="background:#00ffd1"></div></div>
+              </div>
+              <div class="arch-connector"></div>
+              <div class="arch-row" data-layer="govern">
+                <div class="arch-row-label">Govern</div>
+                <div class="arch-box" style="color:#22c55e;border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.03)" onclick="archInfo(this,'Unity Catalog','Centralized Databricks governance. Table ACL, column masking, row-level security, full data lineage — who read what, when.')"><span class="box-name">Unity Catalog</span><span class="box-sub">Lineage · ACL</span><div class="box-bar" style="background:#22c55e"></div></div>
+                <div class="arch-box" style="color:#22c55e;border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.03)" onclick="archInfo(this,'RBAC','Analysts get Gold read-only. Engineers get Silver read-write. Admins get Bronze. Zero-trust — no accidental exposure.')"><span class="box-name">RBAC</span><span class="box-sub">Access control</span><div class="box-bar" style="background:#22c55e"></div></div>
+                <div class="arch-box" style="color:#22c55e;border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.03)" onclick="archInfo(this,'Azure Monitor','Pipeline failure alerts, query perf tracking, SLA dashboards. Log Analytics workspace for full observability.')"><span class="box-name">Monitor</span><span class="box-sub">Observability</span><div class="box-bar" style="background:#22c55e"></div></div>
+                <div class="arch-box" style="color:#22c55e;border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.03)" onclick="archInfo(this,'CI/CD','Azure DevOps + GitHub Actions — DBT test runs, notebook promotion, ADF ARM templates. Zero manual production deploys.')"><span class="box-name">CI/CD</span><span class="box-sub">DevOps</span><div class="box-bar" style="background:#22c55e"></div></div>
+              </div>
+              <div class="arch-connector"></div>
+              <div class="arch-row" data-layer="consume">
+                <div class="arch-row-label">Consume</div>
+                <div class="arch-box" style="color:#ff2d55;border-color:rgba(255,45,85,.25);background:rgba(255,45,85,.03)" onclick="archInfo(this,'Power BI','DirectQuery to Snowflake Gold. Row-level security per business unit. Executive dashboards + operational reports. All 5 projects.')"><span class="box-name">Power BI</span><span class="box-sub">BI dashboards</span><div class="box-bar" style="background:#ff2d55"></div></div>
+                <div class="arch-box" style="color:#ff2d55;border-color:rgba(255,45,85,.25);background:rgba(255,45,85,.03)" onclick="archInfo(this,'Power Apps','Data validation portals, MDM, monitoring apps. Connected to Dataverse + SQL. SCOPE and New Forests workflows.')"><span class="box-name">Power Apps</span><span class="box-sub">Op workflows</span><div class="box-bar" style="background:#ff2d55"></div></div>
+                <div class="arch-box" style="color:#ff2d55;border-color:rgba(255,45,85,.25);background:rgba(255,45,85,.03)" onclick="archInfo(this,'Databricks SQL','Ad-hoc analyst queries on Gold via Photon engine. Serverless, auto-scales to zero. Unity Catalog RBAC enforced.')"><span class="box-name">Databricks SQL</span><span class="box-sub">Ad-hoc queries</span><div class="box-bar" style="background:#ff2d55"></div></div>
+                <div class="arch-box" style="color:#ff2d55;border-color:rgba(255,45,85,.25);background:rgba(255,45,85,.03)" onclick="archInfo(this,'REST APIs','Gold data via secured APIs to downstream apps, mobile, partners. APIM gateway with OAuth2 + rate limiting.')"><span class="box-name">REST APIs</span><span class="box-sub">Integration</span><div class="box-bar" style="background:#ff2d55"></div></div>
+              </div>
+            </div>
+            <div id="arch-info-panel" class="arch-info-panel">
+              <span id="arch-info-title" class="arch-info-title"></span>
+              <span id="arch-info-text"></span>
+            </div>
+          </div>
+          <div class="blog-footer"><span class="btag">Data Warehouse</span><span class="btag">Azure</span><span class="btag">Snowflake</span><span class="btag">Databricks</span><span class="btag">Unity Catalog</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="blog-item reveal">
+      <div class="blog-header" onclick="toggleBlog(this)">
+        <div class="blog-meta">
+          <div class="blog-num">06</div>
+          <div class="blog-cat">Statistics · ML · Published on Medium</div>
+          <div class="blog-title">Non-Parametric vs Parametric Density Estimation on Non-Gaussian Data</div>
+          <div class="blog-preview">When to use KDE vs GMM vs parametric fitting — and why the choice matters more than most practitioners realize.</div>
+        </div>
+        <button class="blog-toggle-btn">+</button>
+      </div>
+      <div class="blog-body">
+        <div class="blog-content">
+          <h3>The core distinction</h3>
+          <p>Parametric: assumes a known distribution, estimates its parameters. <strong>Non-parametric: makes zero assumptions — the data defines its own shape.</strong> Real-world data is never Gaussian. Sales are skewed. Latency has heavy tails. Sensor data is bimodal.</p>
+          <h3>KDE in practice</h3>
+          <div class="code-block"><span class="ck">from</span> sklearn.neighbors <span class="ck">import</span> KernelDensity
+kde = KernelDensity(bandwidth=<span class="cn">0.5</span>, kernel=<span class="cs">'gaussian'</span>)
+kde.fit(revenue_data.reshape(-<span class="cn">1</span>, <span class="cn">1</span>))
+density = np.exp(kde.score_samples(x_range.reshape(-<span class="cn">1</span>, <span class="cn">1</span>)))</div>
+          <h3>Decision guide</h3>
+          <ul>
+            <li><strong>Unimodal, symmetric</strong> → Parametric (Gaussian)</li>
+            <li><strong>Unimodal, skewed</strong> → KDE or log-normal</li>
+            <li><strong>Multimodal</strong> → Gaussian Mixture Model (GMM)</li>
+            <li><strong>Unknown shape</strong> → KDE with cross-validated bandwidth</li>
+          </ul>
+          <div style="margin-top:1.25rem"><a href="https://medium.com/@ishwargupta4554/understanding-the-difference-between-non-parametric-and-parametric-density-estimation-for-197a3597e490" target="_blank" style="font-family:var(--mono);font-size:11px;color:var(--teal);border:1px solid rgba(0,255,209,.2);padding:.6rem 1.25rem;letter-spacing:.08em;text-transform:uppercase;display:inline-block;transition:all .2s">Read on Medium ↗</a></div>
+          <div class="blog-footer"><span class="btag">Statistics</span><span class="btag">KDE</span><span class="btag">GMM</span><span class="btag">ML</span><span class="btag">Python</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="section-num">07</div>
+  <div class="sec-label"><span class="bracket">[</span>07<span class="bracket">]</span> Contact</div>
+  <div class="contact-grid">
+    <div class="contact-left reveal-left">
+      <h3>Let's build<br/>something<br/><em style="color:var(--teal);font-style:normal">worth running.</em></h3>
+      <p>Open to <strong>Senior Data Engineer</strong> and <strong>Lead Data Engineer</strong> roles — product-first companies where data is treated as a first-class citizen.</p>
+      <div class="contact-links">
+        <a href="mailto:ishwargupta4554@gmail.com" class="contact-link">
+          <div class="c-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00ffd1" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><div class="c-label">Email</div><div class="c-val">ishwargupta4554@gmail.com</div></div>
+        </a>
+        <a href="https://www.linkedin.com/in/ishwar-gupta-b3441b189/" target="_blank" class="contact-link">
+          <div class="c-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00ffd1" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+          <div><div class="c-label">LinkedIn</div><div class="c-val">ishwar-gupta-b3441b189</div></div>
+        </a>
+        <a href="https://github.com/ish-g" target="_blank" class="contact-link">
+          <div class="c-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00ffd1" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div>
+          <div><div class="c-label">GitHub</div><div class="c-val">github.com/ish-g</div></div>
+        </a>
+        <a href="https://medium.com/@ishwargupta4554" target="_blank" class="contact-link">
+          <div class="c-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00ffd1" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg></div>
+          <div><div class="c-label">Medium</div><div class="c-val">@ishwargupta4554</div></div>
+        </a>
+        <a href="tel:+919012676900" class="contact-link">
+          <div class="c-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00ffd1" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div><div class="c-label">Phone</div><div class="c-val">+91 9012676900</div></div>
+        </a>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <div class="form-row"><label class="form-label">Name</label><input class="form-input" type="text" placeholder="Your name"/></div>
+      <div class="form-row"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="your@company.com"/></div>
+      <div class="form-row"><label class="form-label">Subject</label><input class="form-input" type="text" placeholder="Senior DE role at Acme Corp"/></div>
+      <div class="form-row"><label class="form-label">Message</label><textarea class="form-input" placeholder="Tell me about the opportunity..."></textarea></div>
+      <button class="form-btn" onclick="window.location.href='mailto:ishwargupta4554@gmail.com'">Send →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Ishwar Gupta</span>
+  <span style="color:var(--teal)">Built different · Noida, India</span>
+  <span>Senior Data Engineer</span>
+</footer>
+
+<script>
+/* ═══════ CURSOR ═══════ */
+var dot=document.getElementById('cursor-dot'),ring=document.getElementById('cursor-ring');
+var mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
+(function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);})();
+
+/* ═══════ SCROLL PROGRESS ═══════ */
+window.addEventListener('scroll',function(){
+  var p=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;
+  document.getElementById('progress').style.width=p+'%';
+});
+
+/* ═══════ HERO CANVAS — data flow network ═══════ */
+(function(){
+  var c=document.getElementById('bg-canvas'),ctx=c.getContext('2d'),W,H,nodes;
+  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}
+  function initNodes(){
+    nodes=[];
+    var n=Math.floor(W*H/8000);
+    for(var i=0;i<n;i++){nodes.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*1.5+.5,pulse:Math.random()*Math.PI*2});}
+  }
+  var t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    t+=.008;
+    nodes.forEach(function(p,i){
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;
+      if(p.y<0||p.y>H)p.vy*=-1;
+      var alpha=(.4+.3*Math.sin(t+p.pulse));
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(0,255,209,'+alpha+')';ctx.fill();
+    });
+    for(var i=0;i<nodes.length;i++){
+      for(var j=i+1;j<nodes.length;j++){
+        var dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<130){
+          ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);
+          ctx.strokeStyle='rgba(0,255,209,'+(1-d/130)*.12+')';ctx.lineWidth=.5;ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  resize();initNodes();draw();
+  window.addEventListener('resize',function(){resize();initNodes();});
+})();
+
+/* ═══════ STAT COUNTER ═══════ */
+var counters=[
+  {el:'count1',target:4,suffix:'+'},{el:'count2',target:1,suffix:'B+'},
+  {el:'count3',target:5,suffix:''},{el:'count4',target:280,suffix:'+'}
+];
+var counted=false;
+function animCounters(){
+  if(counted)return;counted=true;
+  counters.forEach(function(c){
+    var el=document.getElementById(c.el),start=0,end=c.target,dur=1800,step=16;
+    var inc=end/(dur/step);
+    var t=setInterval(function(){
+      start+=inc;
+      if(start>=end){start=end;clearInterval(t);}
+      el.textContent=Math.round(start)+c.suffix;
+    },step);
+  });
+}
+window.addEventListener('scroll',function(){if(window.scrollY<200)animCounters();});
+setTimeout(animCounters,800);
+
+/* ═══════ SCROLL REVEAL ═══════ */
+var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');}});},{threshold:.1});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-scale').forEach(function(el){io.observe(el);});
+
+/* ═══════ SKILL BARS ═══════ */
+var sbIo=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.skill-bar-fill').forEach(function(b){b.style.width=b.dataset.w+'%';});
+      sbIo.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('.skills-terminal').forEach(function(el){sbIo.observe(el);});
+
+/* ═══════ BLOG TOGGLE ═══════ */
+function toggleBlog(header){
+  var body=header.nextElementSibling,btn=header.querySelector('.blog-toggle-btn');
+  var open=body.classList.toggle('open');
+  btn.textContent=open?'−':'+';
+}
+
+/* ═══════ PROJECT ENTRY TOGGLE ═══════ */
+function toggleProj(entry){
+  var body=entry.querySelector('.proj-body'),btn=entry.querySelector('.proj-toggle');
+  var open=body.classList.toggle('open');
+  btn.textContent=open?'−':'+';
+  event.stopPropagation&&event.stopPropagation();
+}
+
+/* ═══════ ARCH INTERACTIVE ═══════ */
+function archLayer(btn,layer){
+  document.getElementById('arch-blog').querySelectorAll('.arch-tab').forEach(function(t){t.classList.remove('active');});
+  btn.classList.add('active');
+  document.querySelectorAll('#arch-rows .arch-row').forEach(function(row){
+    row.classList.toggle('dimmed',layer!=='all'&&row.dataset.layer!==layer);
+  });
+}
+function archInfo(el,title,text){
+  var panel=document.getElementById('arch-info-panel');
+  document.getElementById('arch-info-title').textContent=title;
+  document.getElementById('arch-info-text').textContent=text;
+  panel.style.display='block';
+  document.querySelectorAll('#arch-rows .box-bar').forEach(function(b){b.style.width='0';});
+  el.querySelector('.box-bar').style.width='100%';
+}
+setTimeout(function(){
+  document.querySelectorAll('.arch-box').forEach(function(b,i){
+    b.style.opacity='0';b.style.transition='opacity .3s ease';
+    setTimeout(function(){b.style.opacity='1';},i*30);
+  });
+},200);
+
+/* ═══════ DRAG SCROLL ═══════ */
+(function(){
+  var track=document.getElementById('drag-track'),isDragging=false,startX,scrollLeft;
+  track.addEventListener('mousedown',function(e){isDragging=true;startX=e.pageX-track.offsetLeft;scrollLeft=track.scrollLeft;});
+  document.addEventListener('mouseup',function(){isDragging=false;});
+  document.addEventListener('mousemove',function(e){if(!isDragging)return;e.preventDefault();var x=e.pageX-track.offsetLeft;track.scrollLeft=scrollLeft-(x-startX)*1.2;});
+})();
+
+/* ═══════ 3D TILT ═══════ */
+document.querySelectorAll('.tilt-card').forEach(function(card){
+  card.addEventListener('mousemove',function(e){
+    var r=card.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+    var cx=r.width/2,cy=r.height/2;
+    var rx2=(y-cy)/cy*5,ry2=(x-cx)/cx*5;
+    card.style.transform='perspective(600px) rotateX('+(-rx2)+'deg) rotateY('+ry2+'deg) translateZ(4px)';
+  });
+  card.addEventListener('mouseleave',function(){card.style.transform='perspective(600px) rotateX(0) rotateY(0) translateZ(0)';});
+});
+</script>
+</body>
 </html>
