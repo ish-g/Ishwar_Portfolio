@@ -176,42 +176,120 @@ h2.sec-title .gold{color:var(--gold)}
 .skill-line:nth-child(4n+2) .skill-bar-fill{background:linear-gradient(90deg,var(--orange),#ff9a6c)}
 .skill-line:nth-child(4n+3) .skill-bar-fill{background:linear-gradient(90deg,var(--gold),#ffd666)}
 
-/* PROJECTS */
+/* PROJECTS — flip cards */
 #projects{background:var(--void);padding-bottom:8rem}
 .projects-scroll-hint{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;position:relative;z-index:1}
-.projects-scroll-hint::after{content:'drag →';color:var(--teal)}
-.projects-track{display:flex;gap:1.5rem;overflow-x:auto;padding:1rem 3rem 2rem;margin:0 -3rem;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--teal) transparent;cursor:grab}
+.projects-scroll-hint::after{content:'hover to flip · drag to scroll →';color:var(--teal)}
+.projects-track{display:flex;gap:1.5rem;overflow-x:auto;padding:1rem 3rem 2.5rem;margin:0 -3rem;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--teal) transparent;cursor:grab}
 .projects-track:active{cursor:grabbing}
-.proj-card{flex-shrink:0;width:380px;scroll-snap-align:start;border:1px solid var(--border);background:var(--card);transition:all .35s;position:relative;overflow:hidden}
-.proj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),var(--orange));transform:scaleX(0);transform-origin:left;transition:transform .4s}
-.proj-card:hover{border-color:rgba(0,255,209,.4);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.5)}
-.proj-card:hover::before{transform:scaleX(1)}
-.proj-card-img{height:140px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a0e18,#0d1525);position:relative;overflow:hidden}
-.proj-card-img::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(0,255,209,.03) 40px,rgba(0,255,209,.03) 41px)}
-.proj-body{padding:1.25rem}
-.proj-label{font-family:var(--mono);font-size:9px;color:var(--teal);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.5rem}
-.proj-title{font-family:var(--display);font-size:1.5rem;color:#fff;line-height:1.1;margin-bottom:.75rem}
-.proj-desc{font-size:.83rem;color:var(--sub);line-height:1.75;margin-bottom:1rem}
-.proj-card-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.75rem}
-.proj-links{display:flex;gap:.75rem}
-.proj-link{font-family:var(--mono);font-size:10px;color:var(--teal);transition:color .2s}
-.proj-link:hover{color:var(--orange)}
+/* flip wrapper */
+.proj-flip{flex-shrink:0;width:360px;height:460px;scroll-snap-align:start;perspective:1000px;cursor:pointer}
+.proj-flip-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.4,0,.2,1)}
+.proj-flip:hover .proj-flip-inner{transform:rotateY(180deg)}
+.proj-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:1px solid var(--border);overflow:hidden}
+/* FRONT */
+.proj-front{background:var(--card)}
+.proj-thumb{width:100%;height:240px;position:relative;overflow:hidden;display:block}
+.proj-front-body{padding:1.1rem 1.25rem}
+.proj-label{font-family:var(--mono);font-size:9px;color:var(--teal);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.4rem}
+.proj-title{font-family:var(--display);font-size:1.7rem;color:#fff;line-height:1;margin-bottom:.6rem;letter-spacing:.01em}
+.proj-card-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.6rem}
+.proj-flip-hint{font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:.4rem}
+.proj-flip-hint::after{content:'hover to flip ↻';animation:hint-blink 2s ease-in-out infinite}
+@keyframes hint-blink{0%,100%{opacity:.4}50%{opacity:1}}
+/* BACK */
+.proj-back{background:#070c16;transform:rotateY(180deg);display:flex;flex-direction:column;border-color:rgba(0,255,209,.25)}
+.proj-back::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),var(--orange),var(--gold))}
+.proj-back-inner{padding:1.5rem;flex:1;display:flex;flex-direction:column;overflow:hidden}
+.proj-back-label{font-family:var(--mono);font-size:9px;color:var(--orange);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.4rem}
+.proj-back-title{font-family:var(--display);font-size:1.6rem;color:#fff;line-height:1;margin-bottom:.9rem}
+.proj-back-desc{font-size:.82rem;color:var(--sub);line-height:1.75;margin-bottom:.9rem;flex:1}
+.proj-back-points{list-style:none;margin-bottom:.9rem}
+.proj-back-points li{font-family:var(--mono);font-size:.72rem;color:var(--sub);padding:.2rem 0 .2rem .9rem;position:relative;line-height:1.5}
+.proj-back-points li::before{content:'▸';position:absolute;left:0;color:var(--teal);font-size:.65rem;top:.3rem}
+.proj-back-points li strong{color:var(--text);font-weight:500}
+.proj-back-footer{padding:.9rem 1.5rem;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.proj-link{font-family:var(--mono);font-size:10px;color:var(--teal);transition:color .2s;display:inline-flex;align-items:center;gap:.3rem;padding:5px 12px;border:1px solid rgba(0,255,209,.2);transition:all .2s}
+.proj-link:hover{background:var(--teal);color:#000;border-color:var(--teal)}
 
 /* CERTS */
 #certifications{background:var(--deep)}
-.certs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;background:var(--border);position:relative;z-index:1}
-.cert-card{background:var(--card);padding:2rem 1.5rem;text-align:center;transition:all .3s;position:relative;overflow:hidden}
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border);position:relative;z-index:1;margin-bottom:1rem}
+.cert-card{background:var(--card);padding:1.75rem 1.25rem;text-align:center;transition:all .3s;position:relative;overflow:hidden}
 .cert-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:0;background:linear-gradient(0deg,var(--teal),transparent);transition:height .3s;opacity:.08}
 .cert-card:hover{background:#0d1322}
 .cert-card:hover::after{height:60px}
-.cert-icon{font-size:2rem;display:block;margin-bottom:.75rem;filter:grayscale(1);transition:filter .3s}
+.cert-icon{font-size:1.9rem;display:block;margin-bottom:.75rem;filter:grayscale(.3);transition:filter .3s}
 .cert-card:hover .cert-icon{filter:grayscale(0)}
-.cert-name{font-family:var(--display);font-size:1.15rem;color:#fff;margin-bottom:.3rem;line-height:1.2}
-.cert-issuer{font-family:var(--mono);font-size:10px;color:var(--teal);margin-bottom:.75rem;letter-spacing:.08em}
+.cert-name{font-family:var(--display);font-size:1.1rem;color:#fff;margin-bottom:.25rem;line-height:1.2}
+.cert-issuer{font-family:var(--mono);font-size:10px;color:var(--teal);margin-bottom:.75rem;letter-spacing:.06em}
 .cert-link{font-family:var(--mono);font-size:10px;color:var(--sub);transition:color .2s;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:1px;text-transform:uppercase;letter-spacing:.05em}
 .cert-link:hover{color:var(--teal);border-color:var(--teal)}
+/* ROADMAP CARDS */
+.cert-roadmap{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);position:relative;z-index:1}
+.roadmap-card{background:var(--card);padding:1.5rem;position:relative;overflow:hidden;transition:background .3s}
+.roadmap-card:hover{background:#0a1020}
+.roadmap-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.priority-1::before{background:linear-gradient(90deg,var(--teal),var(--teal2))}
+.priority-2::before{background:linear-gradient(90deg,var(--orange),#ff9a6c)}
+.priority-3::before{background:linear-gradient(90deg,#3b82f6,#60a5fa)}
+.priority-4::before{background:linear-gradient(90deg,var(--gold),#ffd666)}
+.roadmap-badge{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem;color:var(--dim)}
+.roadmap-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem}
+.roadmap-code{font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;letter-spacing:.05em}
+.roadmap-status{font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:2px;letter-spacing:.08em;text-transform:uppercase}
+.priority-1 .roadmap-status{background:rgba(0,255,209,.1);color:var(--teal);border:1px solid rgba(0,255,209,.2)}
+.priority-2 .roadmap-status{background:rgba(255,107,43,.1);color:var(--orange);border:1px solid rgba(255,107,43,.2)}
+.priority-3 .roadmap-status{background:rgba(59,130,246,.1);color:#60a5fa;border:1px solid rgba(59,130,246,.2)}
+.priority-4 .roadmap-status{background:rgba(255,184,0,.1);color:var(--gold);border:1px solid rgba(255,184,0,.2)}
+.roadmap-name{font-family:var(--sans);font-size:.92rem;font-weight:500;color:var(--text);margin-bottom:.25rem;line-height:1.4}
+.roadmap-issuer{font-family:var(--mono);font-size:9px;color:var(--dim);margin-bottom:.85rem;letter-spacing:.04em}
+.roadmap-why-label{font-family:var(--mono);font-size:9px;color:var(--teal);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
+.roadmap-points{list-style:none;margin-bottom:.85rem}
+.roadmap-points li{font-size:.8rem;color:var(--sub);padding:.2rem 0 .2rem 1rem;position:relative;line-height:1.6}
+.roadmap-points li::before{content:'→';position:absolute;left:0;color:var(--teal);font-family:var(--mono);font-size:.7rem}
+.roadmap-meta{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.85rem}
+.rmeta{font-family:var(--mono);font-size:9px;color:var(--dim);padding:3px 8px;border:1px solid rgba(255,255,255,.06);letter-spacing:.03em}
+.roadmap-link{font-family:var(--mono);font-size:10px;color:var(--teal);border-bottom:1px solid rgba(0,255,209,.2);padding-bottom:1px;transition:all .2s;display:inline-block;text-decoration:none}
+.roadmap-link:hover{border-color:var(--teal);color:#fff}
 
-/* BLOGS */
+/* CERT ROADMAP */
+.cert-roadmap{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;position:relative;z-index:1}
+.roadmap-card{background:var(--card);border:1px solid var(--border);padding:1.5rem;position:relative;overflow:hidden;transition:all .3s}
+.roadmap-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.roadmap-card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.4)}
+.priority-1::before{background:linear-gradient(90deg,#ff2d55,#ff6b2b)}
+.priority-1{border-color:rgba(255,45,85,.25)}
+.priority-1:hover{border-color:rgba(255,45,85,.5)}
+.priority-2::before{background:linear-gradient(90deg,#ff6b2b,#ffb800)}
+.priority-2{border-color:rgba(255,107,43,.2)}
+.priority-2:hover{border-color:rgba(255,107,43,.45)}
+.priority-3::before{background:linear-gradient(90deg,#00ffd1,#a855f7)}
+.priority-3{border-color:rgba(0,255,209,.15)}
+.priority-3:hover{border-color:rgba(0,255,209,.4)}
+.priority-4::before{background:linear-gradient(90deg,#22c55e,#00ffd1)}
+.priority-4{border-color:rgba(34,197,94,.15)}
+.priority-4:hover{border-color:rgba(34,197,94,.4)}
+.roadmap-badge{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem}
+.priority-1 .roadmap-badge{color:#ff2d55}
+.priority-2 .roadmap-badge{color:#ff6b2b}
+.priority-3 .roadmap-badge{color:var(--teal)}
+.priority-4 .roadmap-badge{color:#22c55e}
+.roadmap-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem}
+.roadmap-code{font-family:var(--display);font-size:1.4rem;color:#fff;letter-spacing:.02em}
+.roadmap-status{font-family:var(--mono);font-size:9px;padding:3px 8px;border-radius:2px;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.05);color:var(--dim);border:1px solid rgba(255,255,255,.08)}
+.roadmap-name{font-size:.9rem;color:var(--sub);font-weight:400;margin-bottom:.5rem;line-height:1.5}
+.roadmap-issuer{font-family:var(--mono);font-size:9px;color:var(--dim);margin-bottom:1rem;letter-spacing:.05em}
+.roadmap-why-label{font-family:var(--mono);font-size:9px;color:var(--teal);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem}
+.roadmap-points{list-style:none;margin-bottom:.9rem}
+.roadmap-points li{font-size:.8rem;color:var(--sub);padding:.2rem 0 .2rem 1rem;position:relative;line-height:1.6}
+.roadmap-points li::before{content:'▸';position:absolute;left:0;color:var(--teal);font-size:.7rem;top:.35rem}
+.roadmap-meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.9rem}
+.rmeta{font-family:var(--mono);font-size:9px;padding:3px 8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);color:var(--sub);letter-spacing:.03em}
+.roadmap-link{font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:.06em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid rgba(0,255,209,.2);padding-bottom:1px;transition:all .2s;display:inline-block}
+.roadmap-link:hover{color:#fff;border-color:#fff}
+
+
 #blogs{background:var(--void)}
 .blogs-layout{display:flex;flex-direction:column;gap:1px;background:var(--border);position:relative;z-index:1}
 .blog-item{background:var(--card);overflow:hidden;transition:background .3s}
@@ -548,12 +626,459 @@ footer{border-top:1px solid var(--border);padding:1.5rem 3rem;display:flex;align
   <h2 class="sec-title" style="padding-right:3rem">Things I've <em>shipped</em><br/><span class="gold">outside work</span></h2>
   <div class="projects-scroll-hint">Drag to explore</div>
   <div class="projects-track" id="drag-track">
-    <div class="proj-card reveal-scale"><div class="proj-card-img"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#00ffd1" stroke-width="1" opacity=".45"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="proj-body"><div class="proj-label">ML / MLOps · Capstone</div><div class="proj-title">SmartEstateHub</div><div class="proj-desc">Real estate analytics — price prediction, recommendation engine, interactive map visualizations. Full ML pipeline to Streamlit.</div><div class="proj-card-tags"><span class="ptag">Python</span><span class="ptag">Scikit-learn</span><span class="ptag">Streamlit</span><span class="ptag">MLOps</span></div><div class="proj-links"><a href="https://github.com/ish-g/SmartEstateHub" class="proj-link" target="_blank">GitHub ↗</a><a href="https://smartestateapp.streamlit.app/" class="proj-link" target="_blank">Live ↗</a></div></div></div>
-    <div class="proj-card reveal-scale"><div class="proj-card-img"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#ffb800" stroke-width="1" opacity=".45"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="proj-body"><div class="proj-label">Recommendation System</div><div class="proj-title">Movie Recommender</div><div class="proj-desc">Content-based and collaborative filtering. Analyzes user preferences and movie metadata for personalized suggestions via TMDB API.</div><div class="proj-card-tags"><span class="ptag">Python</span><span class="ptag">NLP</span><span class="ptag">Cosine Sim</span><span class="ptag">Streamlit</span></div><div class="proj-links"><a href="https://github.com/ish-g/ML_P2_Movie-Recommender-System" class="proj-link" target="_blank">GitHub ↗</a><a href="https://mlp2movie-recommender-system-x69tdzudaoermgv8bjarjw.streamlit.app/" class="proj-link" target="_blank">Live ↗</a></div></div></div>
-    <div class="proj-card reveal-scale"><div class="proj-card-img"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="1" opacity=".45"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10"/></svg></div><div class="proj-body"><div class="proj-label">Sports Analytics</div><div class="proj-title">IPL Analytics</div><div class="proj-desc">Cricket analytics — player trends, team strategies, win probability, head-to-head stats. Advanced Plotly + Streamlit visualizations.</div><div class="proj-card-tags"><span class="ptag">Python</span><span class="ptag">Pandas</span><span class="ptag">Plotly</span><span class="ptag">EDA</span></div><div class="proj-links"><a href="https://github.com/ish-g/Cricket_Analysis_IPL" class="proj-link" target="_blank">GitHub ↗</a><a href="https://cricketanalysisipl.streamlit.app/" class="proj-link" target="_blank">Live ↗</a></div></div></div>
-    <div class="proj-card reveal-scale"><div class="proj-card-img"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="1" opacity=".45"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="proj-body"><div class="proj-label">HR Analytics · Tableau</div><div class="proj-title">HR Dashboard</div><div class="proj-desc">Turnover rates, performance evaluations, NLP sentiment analysis from employee feedback. Interactive Tableau visualizations.</div><div class="proj-card-tags"><span class="ptag">Tableau</span><span class="ptag">Python</span><span class="ptag">NLP</span><span class="ptag">Sentiment</span></div><div class="proj-links"><a href="https://github.com/ish-g/HR-Analytics-Dashboard" class="proj-link" target="_blank">GitHub ↗</a><a href="https://public.tableau.com/app/profile/ishwar.gupta/viz/HRAnalyticalDashboard_17166495470000/HRAnalyticsDashboard" class="proj-link" target="_blank">Live ↗</a></div></div></div>
-    <div class="proj-card reveal-scale"><div class="proj-card-img"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#00ffd1" stroke-width="1" opacity=".45"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="proj-body"><div class="proj-label">Census Analytics · Geo</div><div class="proj-title">India Census</div><div class="proj-desc">Population trends, literacy rates, gender distribution. Choropleth maps and statistical visualizations from India census data.</div><div class="proj-card-tags"><span class="ptag">Python</span><span class="ptag">Plotly</span><span class="ptag">Streamlit</span><span class="ptag">Geo</span></div><div class="proj-links"><a href="https://github.com/ish-g/Streamlit_Plotly-India_Cencus_Dashboard" class="proj-link" target="_blank">GitHub ↗</a><a href="https://ish-g-streamlit-plotly-india-cencus-dashboard-app-1m6tcu.streamlit.app/" class="proj-link" target="_blank">Live ↗</a></div></div></div>
-    <div class="proj-card reveal-scale"><div class="proj-card-img"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#ff6b2b" stroke-width="1" opacity=".45"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="proj-body"><div class="proj-label">Consumer Analytics</div><div class="proj-title">US Complaints</div><div class="proj-desc">Advanced Tableau dashboard with LOD calculations — frequency trends, geographic heatmaps, resolution patterns at scale.</div><div class="proj-card-tags"><span class="ptag">Tableau</span><span class="ptag">LOD Calc</span><span class="ptag">Data Viz</span></div><div class="proj-links"><a href="https://github.com/ish-g/US-Complaints-Dashboard" class="proj-link" target="_blank">GitHub ↗</a><a href="https://public.tableau.com/app/profile/ishwar.gupta/viz/Assigment-3_17170928789310/Dashboard1" class="proj-link" target="_blank">Live ↗</a></div></div></div>
+
+    <!-- 1. SmartEstateHub -->
+    <div class="proj-flip reveal-scale">
+      <div class="proj-flip-inner">
+        <div class="proj-face proj-front">
+          <div class="proj-thumb">
+            <svg width="100%" height="240" viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg">
+              <rect width="360" height="240" fill="#07090f"/>
+              <!-- grid lines -->
+              <line x1="0" y1="60" x2="360" y2="60" stroke="#0d1525" stroke-width="1"/>
+              <line x1="0" y1="120" x2="360" y2="120" stroke="#0d1525" stroke-width="1"/>
+              <line x1="0" y1="180" x2="360" y2="180" stroke="#0d1525" stroke-width="1"/>
+              <line x1="90" y1="0" x2="90" y2="240" stroke="#0d1525" stroke-width="1"/>
+              <line x1="180" y1="0" x2="180" y2="240" stroke="#0d1525" stroke-width="1"/>
+              <line x1="270" y1="0" x2="270" y2="240" stroke="#0d1525" stroke-width="1"/>
+              <!-- map background -->
+              <rect x="20" y="20" width="200" height="140" rx="4" fill="#0a0e18" stroke="#1a2840" stroke-width="1"/>
+              <!-- map blocks (properties) -->
+              <rect x="35" y="35" width="40" height="30" rx="2" fill="#0d4a3a" stroke="#00ffd1" stroke-width=".8" opacity=".7"/>
+              <rect x="82" y="35" width="55" height="30" rx="2" fill="#1a3a1a" stroke="#22c55e" stroke-width=".8" opacity=".6"/>
+              <rect x="35" y="73" width="30" height="40" rx="2" fill="#3a2200" stroke="#ffb800" stroke-width=".8" opacity=".7"/>
+              <rect x="72" y="73" width="65" height="25" rx="2" fill="#0d4a3a" stroke="#00ffd1" stroke-width=".8" opacity=".5"/>
+              <rect x="145" y="35" width="60" height="55" rx="2" fill="#1a1a3a" stroke="#a855f7" stroke-width=".8" opacity=".6"/>
+              <rect x="72" y="105" width="40" height="35" rx="2" fill="#3a0d0d" stroke="#ff2d55" stroke-width=".8" opacity=".6"/>
+              <rect x="120" y="105" width="85" height="35" rx="2" fill="#1a3a1a" stroke="#22c55e" stroke-width=".8" opacity=".5"/>
+              <!-- price pin -->
+              <circle cx="60" cy="50" r="8" fill="#00ffd1" opacity=".9"/>
+              <text x="60" y="54" font-family="monospace" font-size="6" fill="#000" text-anchor="middle" font-weight="bold">₹</text>
+              <circle cx="175" cy="63" r="8" fill="#ffb800" opacity=".9"/>
+              <text x="175" y="67" font-family="monospace" font-size="6" fill="#000" text-anchor="middle" font-weight="bold">₹</text>
+              <!-- price bar chart right -->
+              <rect x="235" y="120" width="18" height="70" fill="#00ffd1" opacity=".5" rx="2"/>
+              <rect x="260" y="100" width="18" height="90" fill="#00ffd1" opacity=".7" rx="2"/>
+              <rect x="285" y="85" width="18" height="105" fill="#00ffd1" opacity=".9" rx="2"/>
+              <rect x="310" y="110" width="18" height="80" fill="#00ffd1" opacity=".6" rx="2"/>
+              <text x="244" y="198" font-family="monospace" font-size="8" fill="#00ffd1" opacity=".6" text-anchor="middle">2BHK</text>
+              <text x="269" y="198" font-family="monospace" font-size="8" fill="#00ffd1" opacity=".6" text-anchor="middle">3BHK</text>
+              <text x="294" y="198" font-family="monospace" font-size="8" fill="#00ffd1" opacity=".6" text-anchor="middle">4BHK</text>
+              <text x="319" y="198" font-family="monospace" font-size="8" fill="#00ffd1" opacity=".6" text-anchor="middle">Villa</text>
+              <!-- prediction score -->
+              <rect x="20" y="170" width="200" height="30" rx="3" fill="#060c18"/>
+              <text x="30" y="182" font-family="monospace" font-size="8" fill="#00ffd1" opacity=".7">PREDICTED PRICE</text>
+              <text x="30" y="194" font-family="monospace" font-size="10" fill="#fff" font-weight="bold">₹ 84.5 L  · 94.2% accuracy</text>
+              <!-- accent glow -->
+              <ellipse cx="180" cy="120" rx="160" ry="100" fill="none" stroke="#00ffd1" stroke-width=".5" opacity=".08"/>
+            </svg>
+          </div>
+          <div class="proj-front-body">
+            <div class="proj-label">ML / MLOps · Capstone</div>
+            <div class="proj-title">SmartEstateHub</div>
+            <div class="proj-card-tags"><span class="ptag">Python</span><span class="ptag">Scikit-learn</span><span class="ptag">Streamlit</span><span class="ptag">MLOps</span></div>
+            <div class="proj-flip-hint"></div>
+          </div>
+        </div>
+        <div class="proj-face proj-back">
+          <div class="proj-back-inner">
+            <div class="proj-back-label">ML / MLOps · Capstone Project</div>
+            <div class="proj-back-title">SmartEstateHub</div>
+            <div class="proj-back-desc">A full-stack real estate analytics platform that predicts property prices, recommends similar listings, and visualises India's housing market on an interactive map — all deployed on Streamlit.</div>
+            <ul class="proj-back-points">
+              <li><strong>Price prediction model</strong> using Random Forest + feature engineering on 10k+ property listings</li>
+              <li><strong>Recommendation engine</strong> with cosine similarity for "similar properties" suggestions</li>
+              <li><strong>Interactive choropleth maps</strong> showing price heatmaps by city sector via Plotly</li>
+              <li><strong>Full ML pipeline</strong>: EDA → feature selection → model training → Streamlit deployment</li>
+              <li>Achieved <strong>94%+ accuracy</strong> on price prediction after hyperparameter tuning</li>
+            </ul>
+          </div>
+          <div class="proj-back-footer">
+            <a href="https://github.com/ish-g/SmartEstateHub" class="proj-link" target="_blank">GitHub ↗</a>
+            <a href="https://smartestateapp.streamlit.app/" class="proj-link" target="_blank">Live App ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Movie Recommender -->
+    <div class="proj-flip reveal-scale">
+      <div class="proj-flip-inner">
+        <div class="proj-face proj-front">
+          <div class="proj-thumb">
+            <svg width="100%" height="240" viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg">
+              <rect width="360" height="240" fill="#07090f"/>
+              <!-- film strip top -->
+              <rect x="0" y="0" width="360" height="28" fill="#0a0c10"/>
+              <rect x="8" y="5" width="18" height="18" rx="2" fill="#1a1410"/>
+              <rect x="32" y="5" width="18" height="18" rx="2" fill="#1a1014"/>
+              <rect x="56" y="5" width="18" height="18" rx="2" fill="#10141a"/>
+              <rect x="80" y="5" width="18" height="18" rx="2" fill="#141a10"/>
+              <rect x="104" y="5" width="18" height="18" rx="2" fill="#1a1010"/>
+              <rect x="128" y="5" width="18" height="18" rx="2" fill="#10101a"/>
+              <rect x="152" y="5" width="18" height="18" rx="2" fill="#1a1410"/>
+              <rect x="176" y="5" width="18" height="18" rx="2" fill="#141a14"/>
+              <rect x="200" y="5" width="18" height="18" rx="2" fill="#1a1014"/>
+              <rect x="224" y="5" width="18" height="18" rx="2" fill="#10141a"/>
+              <rect x="248" y="5" width="18" height="18" rx="2" fill="#1a1410"/>
+              <rect x="272" y="5" width="18" height="18" rx="2" fill="#141010"/>
+              <rect x="296" y="5" width="18" height="18" rx="2" fill="#10101a"/>
+              <rect x="320" y="5" width="18" height="18" rx="2" fill="#1a1410"/>
+              <rect x="344" y="5" width="18" height="18" rx="2" fill="#141a10"/>
+              <!-- search bar -->
+              <rect x="20" y="36" width="220" height="22" rx="3" fill="#0d1120" stroke="#1e2d40" stroke-width="1"/>
+              <text x="32" y="52" font-family="monospace" font-size="9" fill="#8fa3b8">Search a movie...</text>
+              <rect x="248" y="36" width="50" height="22" rx="3" fill="#ffb800" opacity=".85"/>
+              <text x="273" y="52" font-family="monospace" font-size="9" fill="#000" text-anchor="middle" font-weight="bold">Find</text>
+              <!-- selected movie card (large) -->
+              <rect x="20" y="70" width="80" height="110" rx="3" fill="#1a1205" stroke="#ffb800" stroke-width="1.5" opacity=".9"/>
+              <text x="60" y="112" font-family="monospace" font-size="22" fill="#ffb800" opacity=".6" text-anchor="middle">🎬</text>
+              <text x="60" y="130" font-family="monospace" font-size="7" fill="#ffb800" opacity=".8" text-anchor="middle">INCEPTION</text>
+              <text x="60" y="142" font-family="monospace" font-size="7" fill="#8fa3b8" text-anchor="middle">★★★★★</text>
+              <!-- recommended movies -->
+              <rect x="110" y="70" width="58" height="80" rx="3" fill="#0a1220" stroke="#00ffd1" stroke-width="1" opacity=".7"/>
+              <text x="139" y="105" font-family="monospace" font-size="16" fill="#00ffd1" opacity=".5" text-anchor="middle">🎥</text>
+              <text x="139" y="120" font-family="monospace" font-size="6" fill="#b8c8dc" text-anchor="middle">Interstellar</text>
+              <text x="139" y="130" font-family="monospace" font-size="6" fill="#00ffd1" text-anchor="middle">94% match</text>
+              <rect x="175" y="70" width="58" height="80" rx="3" fill="#0a1220" stroke="#a855f7" stroke-width="1" opacity=".7"/>
+              <text x="204" y="105" font-family="monospace" font-size="16" fill="#a855f7" opacity=".5" text-anchor="middle">🎥</text>
+              <text x="204" y="120" font-family="monospace" font-size="6" fill="#b8c8dc" text-anchor="middle">The Matrix</text>
+              <text x="204" y="130" font-family="monospace" font-size="6" fill="#a855f7" text-anchor="middle">91% match</text>
+              <rect x="240" y="70" width="58" height="80" rx="3" fill="#0a1220" stroke="#ff6b2b" stroke-width="1" opacity=".7"/>
+              <text x="269" y="105" font-family="monospace" font-size="16" fill="#ff6b2b" opacity=".5" text-anchor="middle">🎥</text>
+              <text x="269" y="120" font-family="monospace" font-size="6" fill="#b8c8dc" text-anchor="middle">Tenet</text>
+              <text x="269" y="130" font-family="monospace" font-size="6" fill="#ff6b2b" text-anchor="middle">88% match</text>
+              <rect x="305" y="70" width="40" height="80" rx="3" fill="#0a1220" stroke="#1e2d40" stroke-width="1" opacity=".5"/>
+              <text x="325" y="115" font-family="monospace" font-size="10" fill="#4a6080" text-anchor="middle">+more</text>
+              <!-- similarity score bar -->
+              <rect x="20" y="192" width="320" height="8" rx="2" fill="#0d1120"/>
+              <rect x="20" y="192" width="200" height="8" rx="2" fill="#ffb800" opacity=".6"/>
+              <text x="20" y="218" font-family="monospace" font-size="8" fill="#8fa3b8">TMDB API · Cosine Similarity · Content-Based Filtering</text>
+            </svg>
+          </div>
+          <div class="proj-front-body">
+            <div class="proj-label">Recommendation System</div>
+            <div class="proj-title">Movie Recommender</div>
+            <div class="proj-card-tags"><span class="ptag">Python</span><span class="ptag">NLP</span><span class="ptag">Cosine Sim</span><span class="ptag">Streamlit</span></div>
+            <div class="proj-flip-hint"></div>
+          </div>
+        </div>
+        <div class="proj-face proj-back">
+          <div class="proj-back-inner">
+            <div class="proj-back-label">Recommendation System</div>
+            <div class="proj-back-title">Movie Recommender</div>
+            <div class="proj-back-desc">An intelligent movie recommendation engine combining content-based and collaborative filtering to suggest personalised movies based on user's watch history and preferences via the TMDB API.</div>
+            <ul class="proj-back-points">
+              <li><strong>Content-based filtering</strong> using TF-IDF vectorisation on plot, genre, cast, and director data</li>
+              <li><strong>Cosine similarity matrix</strong> computed across 5000+ TMDB movies for fast nearest-neighbour lookup</li>
+              <li><strong>Collaborative filtering</strong> layer using user preference signals to personalise results</li>
+              <li><strong>Movie posters fetched live</strong> from TMDB API and displayed in a clean Streamlit UI</li>
+              <li>NLP preprocessing pipeline: <strong>stemming, stop-word removal, tag vectorisation</strong></li>
+            </ul>
+          </div>
+          <div class="proj-back-footer">
+            <a href="https://github.com/ish-g/ML_P2_Movie-Recommender-System" class="proj-link" target="_blank">GitHub ↗</a>
+            <a href="https://mlp2movie-recommender-system-x69tdzudaoermgv8bjarjw.streamlit.app/" class="proj-link" target="_blank">Live App ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. IPL Analytics -->
+    <div class="proj-flip reveal-scale">
+      <div class="proj-flip-inner">
+        <div class="proj-face proj-front">
+          <div class="proj-thumb">
+            <svg width="100%" height="240" viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg">
+              <rect width="360" height="240" fill="#07090f"/>
+              <!-- cricket field oval -->
+              <ellipse cx="180" cy="120" rx="150" ry="100" fill="#071408" stroke="#0d2010" stroke-width="1"/>
+              <ellipse cx="180" cy="120" rx="120" ry="80" fill="none" stroke="#0d2818" stroke-width="1"/>
+              <ellipse cx="180" cy="120" rx="30" ry="20" fill="#0a1a0a" stroke="#1a3a1a" stroke-width="1"/>
+              <!-- pitch -->
+              <rect x="168" y="104" width="24" height="32" rx="2" fill="#1a2a0a" stroke="#2a4a1a" stroke-width="1"/>
+              <!-- player dots -->
+              <circle cx="180" cy="118" r="5" fill="#ffb800" opacity=".9"/>
+              <circle cx="180" cy="130" r="4" fill="#ff6b2b" opacity=".8"/>
+              <circle cx="140" cy="95" r="3" fill="#00ffd1" opacity=".7"/>
+              <circle cx="220" cy="95" r="3" fill="#00ffd1" opacity=".7"/>
+              <circle cx="130" cy="130" r="3" fill="#00ffd1" opacity=".7"/>
+              <circle cx="230" cy="130" r="3" fill="#00ffd1" opacity=".7"/>
+              <circle cx="155" cy="155" r="3" fill="#00ffd1" opacity=".7"/>
+              <circle cx="205" cy="155" r="3" fill="#00ffd1" opacity=".7"/>
+              <circle cx="180" cy="165" r="3" fill="#00ffd1" opacity=".7"/>
+              <circle cx="155" cy="78" r="3" fill="#a855f7" opacity=".7"/>
+              <circle cx="205" cy="78" r="3" fill="#a855f7" opacity=".7"/>
+              <!-- scorecard overlay top-left -->
+              <rect x="0" y="0" width="130" height="54" fill="rgba(7,9,15,.92)"/>
+              <text x="10" y="14" font-family="monospace" font-size="8" fill="#a855f7" font-weight="bold">IPL 2024</text>
+              <text x="10" y="26" font-family="monospace" font-size="10" fill="#fff" font-weight="bold">MI vs CSK</text>
+              <text x="10" y="38" font-family="monospace" font-size="9" fill="#ffb800">MI  186/4  (18.2)</text>
+              <text x="10" y="50" font-family="monospace" font-size="9" fill="#00ffd1">CSK 142/7  (20.0)</text>
+              <!-- win probability bar top-right -->
+              <rect x="230" y="0" width="130" height="38" fill="rgba(7,9,15,.92)"/>
+              <text x="240" y="14" font-family="monospace" font-size="7" fill="#8fa3b8">WIN PROBABILITY</text>
+              <rect x="240" y="20" width="110" height="8" rx="2" fill="#0d1525"/>
+              <rect x="240" y="20" width="72" height="8" rx="2" fill="#a855f7" opacity=".8"/>
+              <text x="240" y="36" font-family="monospace" font-size="7" fill="#a855f7">MI 65%</text>
+              <text x="305" y="36" font-family="monospace" font-size="7" fill="#8fa3b8">CSK 35%</text>
+              <!-- bottom stat strip -->
+              <rect x="0" y="210" width="360" height="30" fill="rgba(7,9,15,.95)"/>
+              <text x="15" y="222" font-family="monospace" font-size="7" fill="#8fa3b8">TOP SCORER</text>
+              <text x="15" y="232" font-family="monospace" font-size="8" fill="#ffb800" font-weight="bold">Rohit Sharma  89(54)</text>
+              <text x="145" y="222" font-family="monospace" font-size="7" fill="#8fa3b8">ECONOMY</text>
+              <text x="145" y="232" font-family="monospace" font-size="8" fill="#00ffd1" font-weight="bold">8.2  |  SR: 164.8</text>
+              <text x="265" y="222" font-family="monospace" font-size="7" fill="#8fa3b8">4s/6s</text>
+              <text x="265" y="232" font-family="monospace" font-size="8" fill="#ff6b2b" font-weight="bold">8 fours / 5 sixes</text>
+            </svg>
+          </div>
+          <div class="proj-front-body">
+            <div class="proj-label">Sports Analytics · Dashboard</div>
+            <div class="proj-title">IPL Analytics</div>
+            <div class="proj-card-tags"><span class="ptag">Python</span><span class="ptag">Pandas</span><span class="ptag">Plotly</span><span class="ptag">EDA</span></div>
+            <div class="proj-flip-hint"></div>
+          </div>
+        </div>
+        <div class="proj-face proj-back">
+          <div class="proj-back-inner">
+            <div class="proj-back-label">Sports Analytics · Dashboard</div>
+            <div class="proj-back-title">IPL Analytics</div>
+            <div class="proj-back-desc">A comprehensive cricket analytics web app covering 17 IPL seasons — player performance trends, team strategies, win probability models, and head-to-head matchup stats with rich Plotly visualisations.</div>
+            <ul class="proj-back-points">
+              <li><strong>17 seasons of IPL data</strong> analysed — 900+ matches, 12k+ player records</li>
+              <li><strong>Win probability model</strong> computed over ball-by-ball delivery data</li>
+              <li><strong>Player performance dashboards</strong>: batting avg, strike rate, economy, wickets by phase</li>
+              <li><strong>Team strategy heatmaps</strong> showing bowling/batting patterns by over and ground</li>
+              <li>Interactive <strong>head-to-head comparison</strong> charts between any two players or teams</li>
+            </ul>
+          </div>
+          <div class="proj-back-footer">
+            <a href="https://github.com/ish-g/Cricket_Analysis_IPL" class="proj-link" target="_blank">GitHub ↗</a>
+            <a href="https://cricketanalysisipl.streamlit.app/" class="proj-link" target="_blank">Live App ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. HR Dashboard -->
+    <div class="proj-flip reveal-scale">
+      <div class="proj-flip-inner">
+        <div class="proj-face proj-front">
+          <div class="proj-thumb">
+            <svg width="100%" height="240" viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg">
+              <rect width="360" height="240" fill="#07090f"/>
+              <!-- header bar -->
+              <rect x="0" y="0" width="360" height="32" fill="#0a0e18"/>
+              <text x="16" y="21" font-family="monospace" font-size="11" fill="#22c55e" font-weight="bold">HR Analytics Dashboard</text>
+              <rect x="280" y="8" width="60" height="16" rx="3" fill="#22c55e" opacity=".15"/>
+              <text x="310" y="20" font-family="monospace" font-size="8" fill="#22c55e" text-anchor="middle">TABLEAU</text>
+              <!-- KPI cards row -->
+              <rect x="10" y="40" width="75" height="48" rx="3" fill="#0a1a0a" stroke="#22c55e" stroke-width=".8" opacity=".7"/>
+              <text x="47" y="56" font-family="monospace" font-size="7" fill="#8fa3b8" text-anchor="middle">HEADCOUNT</text>
+              <text x="47" y="75" font-family="monospace" font-size="16" fill="#22c55e" text-anchor="middle" font-weight="bold">1,247</text>
+              <rect x="93" y="40" width="75" height="48" rx="3" fill="#1a0a0a" stroke="#ff2d55" stroke-width=".8" opacity=".7"/>
+              <text x="130" y="56" font-family="monospace" font-size="7" fill="#8fa3b8" text-anchor="middle">ATTRITION</text>
+              <text x="130" y="75" font-family="monospace" font-size="16" fill="#ff2d55" text-anchor="middle" font-weight="bold">16.2%</text>
+              <rect x="176" y="40" width="75" height="48" rx="3" fill="#1a1500" stroke="#ffb800" stroke-width=".8" opacity=".7"/>
+              <text x="213" y="56" font-family="monospace" font-size="7" fill="#8fa3b8" text-anchor="middle">AVG TENURE</text>
+              <text x="213" y="75" font-family="monospace" font-size="16" fill="#ffb800" text-anchor="middle" font-weight="bold">3.8y</text>
+              <rect x="259" y="40" width="90" height="48" rx="3" fill="#001a14" stroke="#00ffd1" stroke-width=".8" opacity=".7"/>
+              <text x="304" y="56" font-family="monospace" font-size="7" fill="#8fa3b8" text-anchor="middle">SATISFACTION</text>
+              <text x="304" y="75" font-family="monospace" font-size="16" fill="#00ffd1" text-anchor="middle" font-weight="bold">74%</text>
+              <!-- donut chart (attrition by dept) -->
+              <circle cx="80" cy="155" r="46" fill="none" stroke="#ff2d55" stroke-width="16" stroke-dasharray="72 216" stroke-dashoffset="0" opacity=".8"/>
+              <circle cx="80" cy="155" r="46" fill="none" stroke="#22c55e" stroke-width="16" stroke-dasharray="96 192" stroke-dashoffset="-72" opacity=".8"/>
+              <circle cx="80" cy="155" r="46" fill="none" stroke="#ffb800" stroke-width="16" stroke-dasharray="48 240" stroke-dashoffset="-168" opacity=".8"/>
+              <circle cx="80" cy="155" r="46" fill="none" stroke="#a855f7" stroke-width="16" stroke-dasharray="72 216" stroke-dashoffset="-216" opacity=".8"/>
+              <text x="80" y="151" font-family="monospace" font-size="7" fill="#8fa3b8" text-anchor="middle">BY DEPT</text>
+              <text x="80" y="163" font-family="monospace" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold">16.2%</text>
+              <!-- sentiment bars -->
+              <text x="150" y="110" font-family="monospace" font-size="8" fill="#8fa3b8">SENTIMENT ANALYSIS</text>
+              <rect x="150" y="118" width="180" height="10" rx="2" fill="#0d1525"/>
+              <rect x="150" y="118" width="126" height="10" rx="2" fill="#22c55e" opacity=".7"/>
+              <text x="150" y="141" font-family="monospace" font-size="7" fill="#22c55e">POSITIVE  70%</text>
+              <rect x="150" y="148" width="180" height="10" rx="2" fill="#0d1525"/>
+              <rect x="150" y="148" width="54" height="10" rx="2" fill="#ffb800" opacity=".7"/>
+              <text x="150" y="171" font-family="monospace" font-size="7" fill="#ffb800">NEUTRAL  30%</text>
+              <rect x="150" y="178" width="180" height="10" rx="2" fill="#0d1525"/>
+              <rect x="150" y="178" width="18" height="10" rx="2" fill="#ff2d55" opacity=".7"/>
+              <text x="150" y="201" font-family="monospace" font-size="7" fill="#ff2d55">NEGATIVE  10%</text>
+              <!-- bottom label -->
+              <text x="150" y="225" font-family="monospace" font-size="7" fill="#4a6080">NLP · VADER Sentiment · Employee Feedback 2024</text>
+            </svg>
+          </div>
+          <div class="proj-front-body">
+            <div class="proj-label">HR Analytics · Tableau</div>
+            <div class="proj-title">HR Dashboard</div>
+            <div class="proj-card-tags"><span class="ptag">Tableau</span><span class="ptag">Python</span><span class="ptag">NLP</span><span class="ptag">Sentiment</span></div>
+            <div class="proj-flip-hint"></div>
+          </div>
+        </div>
+        <div class="proj-face proj-back">
+          <div class="proj-back-inner">
+            <div class="proj-back-label">HR Analytics · Tableau</div>
+            <div class="proj-back-title">HR Dashboard</div>
+            <div class="proj-back-desc">An end-to-end HR analytics platform combining Tableau visualisations with Python NLP sentiment analysis on employee feedback — enabling proactive HR decision-making on attrition, performance, and morale.</div>
+            <ul class="proj-back-points">
+              <li><strong>Attrition analysis</strong> across department, tenure, age group, and performance band</li>
+              <li><strong>VADER sentiment analysis</strong> on employee survey feedback using Python NLTK</li>
+              <li><strong>Performance evaluation trends</strong> with YoY comparison and cohort breakdowns</li>
+              <li>Interactive <strong>Tableau dashboards</strong> with drill-down filters by region, department, grade</li>
+              <li>Identified <strong>top 3 attrition risk factors</strong> with actionable recommendations for HR</li>
+            </ul>
+          </div>
+          <div class="proj-back-footer">
+            <a href="https://github.com/ish-g/HR-Analytics-Dashboard" class="proj-link" target="_blank">GitHub ↗</a>
+            <a href="https://public.tableau.com/app/profile/ishwar.gupta/viz/HRAnalyticalDashboard_17166495470000/HRAnalyticsDashboard" class="proj-link" target="_blank">Dashboard ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. India Census -->
+    <div class="proj-flip reveal-scale">
+      <div class="proj-flip-inner">
+        <div class="proj-face proj-front">
+          <div class="proj-thumb">
+            <svg width="100%" height="240" viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg">
+              <rect width="360" height="240" fill="#07090f"/>
+              <!-- India map shape (simplified) -->
+              <polygon points="140,20 200,18 230,35 240,60 250,80 245,110 250,140 235,168 215,185 190,195 165,190 145,175 130,155 120,130 115,105 118,75 125,50" fill="#0a1820" stroke="#1a3050" stroke-width="1.5"/>
+              <!-- state shading (choropleth-style) -->
+              <polygon points="140,20 170,22 175,45 155,55 135,50 125,35" fill="#0d2a3a" opacity=".9"/>
+              <polygon points="170,22 200,18 210,40 195,55 175,45" fill="#0d3a2a" opacity=".9"/>
+              <polygon points="155,55 175,45 195,55 190,80 165,80 145,70" fill="#1a3030" opacity=".9"/>
+              <polygon points="145,70 165,80 190,80 200,105 180,115 155,110 135,95 130,75" fill="#0d2040" opacity=".9"/>
+              <polygon points="180,115 200,105 230,110 235,140 215,155 190,155 170,140 165,120" fill="#0a3020" opacity=".9"/>
+              <polygon points="165,120 190,155 165,175 145,165 135,145 140,125" fill="#1a2a10" opacity=".9"/>
+              <!-- population density dots -->
+              <circle cx="162" cy="38" r="3" fill="#00ffd1" opacity=".7"/>
+              <circle cx="185" cy="35" r="5" fill="#00ffd1" opacity=".8"/>
+              <circle cx="195" cy="70" r="4" fill="#ffb800" opacity=".7"/>
+              <circle cx="165" cy="95" r="7" fill="#ff6b2b" opacity=".8"/>
+              <circle cx="195" cy="130" r="5" fill="#00ffd1" opacity=".6"/>
+              <circle cx="165" cy="148" r="4" fill="#22c55e" opacity=".7"/>
+              <circle cx="210" cy="48" r="3" fill="#a855f7" opacity=".6"/>
+              <!-- legend -->
+              <rect x="260" y="30" width="85" height="120" rx="3" fill="rgba(10,14,24,.9)" stroke="#1e2d40" stroke-width="1"/>
+              <text x="302" y="46" font-family="monospace" font-size="7" fill="#8fa3b8" text-anchor="middle">DENSITY</text>
+              <circle cx="275" cy="60" r="5" fill="#ff6b2b" opacity=".8"/>
+              <text x="285" y="64" font-family="monospace" font-size="7" fill="#b8c8dc">Very High</text>
+              <circle cx="275" cy="80" r="4" fill="#ffb800" opacity=".8"/>
+              <text x="285" y="84" font-family="monospace" font-size="7" fill="#b8c8dc">High</text>
+              <circle cx="275" cy="100" r="3.5" fill="#00ffd1" opacity=".8"/>
+              <text x="285" y="104" font-family="monospace" font-size="7" fill="#b8c8dc">Medium</text>
+              <circle cx="275" cy="120" r="2.5" fill="#22c55e" opacity=".8"/>
+              <text x="285" y="124" font-family="monospace" font-size="7" fill="#b8c8dc">Low</text>
+              <circle cx="275" cy="138" r="2" fill="#a855f7" opacity=".8"/>
+              <text x="285" y="142" font-family="monospace" font-size="7" fill="#b8c8dc">Very Low</text>
+              <!-- stats strip -->
+              <rect x="0" y="200" width="360" height="40" fill="rgba(7,9,15,.95)"/>
+              <text x="20" y="215" font-family="monospace" font-size="7" fill="#8fa3b8">POPULATION</text>
+              <text x="20" y="228" font-family="monospace" font-size="9" fill="#fff" font-weight="bold">1.42 B</text>
+              <text x="100" y="215" font-family="monospace" font-size="7" fill="#8fa3b8">LITERACY</text>
+              <text x="100" y="228" font-family="monospace" font-size="9" fill="#00ffd1" font-weight="bold">74.0%</text>
+              <text x="180" y="215" font-family="monospace" font-size="7" fill="#8fa3b8">SEX RATIO</text>
+              <text x="180" y="228" font-family="monospace" font-size="9" fill="#a855f7" font-weight="bold">940 / 1000</text>
+              <text x="270" y="215" font-family="monospace" font-size="7" fill="#8fa3b8">STATES</text>
+              <text x="270" y="228" font-family="monospace" font-size="9" fill="#ffb800" font-weight="bold">28 + 8 UTs</text>
+            </svg>
+          </div>
+          <div class="proj-front-body">
+            <div class="proj-label">Census Analytics · Geospatial</div>
+            <div class="proj-title">India Census</div>
+            <div class="proj-card-tags"><span class="ptag">Python</span><span class="ptag">Plotly</span><span class="ptag">Streamlit</span><span class="ptag">Geospatial</span></div>
+            <div class="proj-flip-hint"></div>
+          </div>
+        </div>
+        <div class="proj-face proj-back">
+          <div class="proj-back-inner">
+            <div class="proj-back-label">Census Analytics · Geospatial</div>
+            <div class="proj-back-title">India Census Dashboard</div>
+            <div class="proj-back-desc">An interactive geospatial dashboard exploring India's demographic landscape across all 28 states and 8 UTs — population trends, literacy rates, gender distribution, and growth analysis from census data.</div>
+            <ul class="proj-back-points">
+              <li><strong>Choropleth maps</strong> built with Plotly + GeoJSON for state-level population density</li>
+              <li><strong>Literacy & sex ratio</strong> breakdowns by state with drill-down to district level</li>
+              <li><strong>Population growth analysis</strong> with decade-on-decade comparison (2001 vs 2011)</li>
+              <li>Dynamic <strong>filter panel</strong> — filter by state, metric, and demographic group simultaneously</li>
+              <li>Visualised <strong>urban vs rural</strong> split and top 10 most / least populous states</li>
+            </ul>
+          </div>
+          <div class="proj-back-footer">
+            <a href="https://github.com/ish-g/Streamlit_Plotly-India_Cencus_Dashboard" class="proj-link" target="_blank">GitHub ↗</a>
+            <a href="https://ish-g-streamlit-plotly-india-cencus-dashboard-app-1m6tcu.streamlit.app/" class="proj-link" target="_blank">Live App ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. US Complaints -->
+    <div class="proj-flip reveal-scale">
+      <div class="proj-flip-inner">
+        <div class="proj-face proj-front">
+          <div class="proj-thumb">
+            <svg width="100%" height="240" viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg">
+              <rect width="360" height="240" fill="#07090f"/>
+              <!-- US map silhouette (simplified) -->
+              <polygon points="30,80 80,65 140,60 200,58 260,62 310,70 330,90 325,115 310,130 270,140 220,145 170,142 120,140 80,138 40,130 20,110" fill="#0a0e18" stroke="#1a2840" stroke-width="1.5"/>
+              <!-- Alaska stub -->
+              <polygon points="30,80 20,90 15,110 25,120 40,115" fill="#0a0e18" stroke="#1a2840" stroke-width="1"/>
+              <!-- heatmap blobs (complaint density by region) -->
+              <ellipse cx="290" cy="100" rx="35" ry="22" fill="#ff2d55" opacity=".3"/>
+              <ellipse cx="290" cy="100" rx="20" ry="13" fill="#ff2d55" opacity=".5"/>
+              <ellipse cx="290" cy="100" rx="10" ry="7" fill="#ff2d55" opacity=".7"/>
+              <ellipse cx="160" cy="105" rx="30" ry="20" fill="#ff6b2b" opacity=".3"/>
+              <ellipse cx="160" cy="105" rx="18" ry="12" fill="#ff6b2b" opacity=".45"/>
+              <ellipse cx="80" cy="108" rx="22" ry="16" fill="#ffb800" opacity=".3"/>
+              <ellipse cx="80" cy="108" rx="12" ry="9" fill="#ffb800" opacity=".45"/>
+              <ellipse cx="220" cy="90" rx="18" ry="12" fill="#a855f7" opacity=".3"/>
+              <ellipse cx="220" cy="90" rx="10" ry="7" fill="#a855f7" opacity=".4"/>
+              <!-- trend line chart at bottom -->
+              <polyline points="20,200 50,195 80,188 110,192 140,180 170,175 200,178 230,168 260,172 290,160 320,155 340,158" fill="none" stroke="#ff6b2b" stroke-width="2" opacity=".8"/>
+              <polyline points="20,210 50,208 80,205 110,202 140,198 170,196 200,193 230,190 260,186 290,183 320,180 340,182" fill="none" stroke="#00ffd1" stroke-width="1.5" opacity=".6"/>
+              <!-- bar chart overlay top-right -->
+              <rect x="0" y="0" width="360" height="24" fill="rgba(7,9,15,.9)"/>
+              <text x="14" y="16" font-family="monospace" font-size="8" fill="#ff6b2b" font-weight="bold">US Consumer Complaints · Tableau LOD Dashboard</text>
+              <!-- side legend -->
+              <rect x="0" y="148" width="360" height="14" fill="rgba(7,9,15,.85)"/>
+              <rect x="14" y="152" width="18" height="6" rx="1" fill="#ff2d55" opacity=".8"/>
+              <text x="36" y="160" font-family="monospace" font-size="7" fill="#b8c8dc">NY/NJ High</text>
+              <rect x="105" y="152" width="18" height="6" rx="1" fill="#ff6b2b" opacity=".8"/>
+              <text x="127" y="160" font-family="monospace" font-size="7" fill="#b8c8dc">Midwest</text>
+              <rect x="190" y="152" width="18" height="6" rx="1" fill="#ffb800" opacity=".8"/>
+              <text x="212" y="160" font-family="monospace" font-size="7" fill="#b8c8dc">West Coast</text>
+              <rect x="280" y="152" width="18" height="6" rx="1" fill="#a855f7" opacity=".8"/>
+              <text x="302" y="160" font-family="monospace" font-size="7" fill="#b8c8dc">SE</text>
+            </svg>
+          </div>
+          <div class="proj-front-body">
+            <div class="proj-label">Consumer Analytics · Tableau</div>
+            <div class="proj-title">US Complaints</div>
+            <div class="proj-card-tags"><span class="ptag">Tableau</span><span class="ptag">LOD Calc</span><span class="ptag">Data Viz</span></div>
+            <div class="proj-flip-hint"></div>
+          </div>
+        </div>
+        <div class="proj-face proj-back">
+          <div class="proj-back-inner">
+            <div class="proj-back-label">Consumer Analytics · Tableau</div>
+            <div class="proj-back-title">US Complaints Dashboard</div>
+            <div class="proj-back-desc">An advanced Tableau dashboard leveraging Level of Detail (LOD) calculations to analyse CFPB consumer complaint data across financial sectors — geographic heatmaps, trend analysis, and resolution patterns.</div>
+            <ul class="proj-back-points">
+              <li><strong>LOD calculations</strong> (FIXED, INCLUDE, EXCLUDE) for accurate aggregation across dimensions</li>
+              <li><strong>Geographic heatmap</strong> of complaint density across all 50 US states by product category</li>
+              <li><strong>YoY trend lines</strong> across mortgage, credit card, student loan, and debt collection sectors</li>
+              <li><strong>Resolution rate analysis</strong> — timely vs disputed vs closed without relief breakdown</li>
+              <li>Ranked <strong>top 10 financial companies</strong> by complaint volume with drill-through capability</li>
+            </ul>
+          </div>
+          <div class="proj-back-footer">
+            <a href="https://github.com/ish-g/US-Complaints-Dashboard" class="proj-link" target="_blank">GitHub ↗</a>
+            <a href="https://public.tableau.com/app/profile/ishwar.gupta/viz/Assigment-3_17170928789310/Dashboard1" class="proj-link" target="_blank">Dashboard ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div style="flex-shrink:0;width:1.5rem"></div>
   </div>
 </section>
@@ -562,13 +1087,44 @@ footer{border-top:1px solid var(--border);padding:1.5rem 3rem;display:flex;align
 <section id="certifications" class="section">
   <div class="section-num">05</div>
   <div class="sec-label"><span class="bracket">[</span>05<span class="bracket">]</span> Credentials</div>
-  <h2 class="sec-title">Certified <em>expertise</em></h2>
+  <h2 class="sec-title">Certified &amp; <em>levelling up</em></h2>
+
+  <!-- EARNED -->
+  <div style="font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:.75rem;position:relative;z-index:1">
+    <span style="width:16px;height:1px;background:var(--teal);display:inline-block"></span> Earned credentials
+  </div>
   <div class="certs-grid reveal">
-    <div class="cert-card"><span class="cert-icon">🏛</span><div class="cert-name">Intro to Data Science</div><div class="cert-issuer">CISCO · Credly</div><a class="cert-link" href="https://www.credly.com/badges/8464d6f4-cdf8-445f-b428-463254082086/linked_in_profile" target="_blank">View credential →</a></div>
-    <div class="cert-card"><span class="cert-icon">📊</span><div class="cert-name">Business Analytics with Excel</div><div class="cert-issuer">Simplilearn</div><a class="cert-link" href="https://www.simplilearn.com/skillup-certificate-landing?token=eyJjb3Vyc2VfaWQiOiI2NjQiLCJjZXJ0aWZpY2F0ZV91cmwiOiJodHRwczpcL1wvY2VydGlmaWNhdGVzLnNpbXBsaWNkbi5uZXRcL3NoYXJlXC90aHVtYl80ODYwMzU0XzE3MDc0MDU0NjcucG5nIiwidXNlcm5hbWUiOiJJc2h3YXIgR3VwdGEifQ%3D%3D&amp;utm_source=shared-certificate" target="_blank">View credential →</a></div>
-    <div class="cert-card"><span class="cert-icon">🐍</span><div class="cert-name">Python (Problem Solving)</div><div class="cert-issuer">HackerRank</div><a class="cert-link" href="https://www.hackerrank.com/certificates/5616582bdaf3" target="_blank">View credential →</a></div>
-    <div class="cert-card"><span class="cert-icon">🗄️</span><div class="cert-name">SQL Intermediate</div><div class="cert-issuer">HackerRank</div><a class="cert-link" href="https://www.hackerrank.com/certificates/7053d3aa322a" target="_blank">View credential →</a></div>
-    <div class="cert-card"><span class="cert-icon">🎓</span><div class="cert-name">Master in Data Science</div><div class="cert-issuer">DIGIPERFORM · 2023–2024</div><span class="cert-link" style="cursor:default;border-color:transparent;color:var(--dim)">Python · ML · Statistics</span></div>
+    <div class="cert-card">
+      <span class="cert-icon">🎓</span>
+      <div class="cert-name">Data Science — ML &amp; AI Program</div>
+      <div class="cert-issuer">DIGIPERFORM · Dec 2024</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--dim);margin-bottom:.6rem;line-height:1.5">Statistics · Tableau · Power BI · Python · ML · Deep Learning · NLP · Gen AI · RDBMS</div>
+      <span class="cert-link" style="cursor:default;border-color:transparent;color:var(--dim)">HON196267 · DS/2023-24/DSA/110</span>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">🏛</span>
+      <div class="cert-name">Introduction to Data Science</div>
+      <div class="cert-issuer">CISCO · Credly</div>
+      <a class="cert-link" href="https://www.credly.com/badges/8464d6f4-cdf8-445f-b428-463254082086/linked_in_profile" target="_blank">View credential →</a>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">📊</span>
+      <div class="cert-name">Business Analytics with Excel</div>
+      <div class="cert-issuer">Simplilearn</div>
+      <a class="cert-link" href="https://www.simplilearn.com/skillup-certificate-landing?token=eyJjb3Vyc2VfaWQiOiI2NjQiLCJjZXJ0aWZpY2F0ZV91cmwiOiJodHRwczpcL1wvY2VydGlmaWNhdGVzLnNpbXBsaWNkbi5uZXRcL3NoYXJlXC90aHVtYl80ODYwMzU0XzE3MDc0MDU0NjcucG5nIiwidXNlcm5hbWUiOiJJc2h3YXIgR3VwdGEifQ%3D%3D&amp;utm_source=shared-certificate" target="_blank">View credential →</a>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">🐍</span>
+      <div class="cert-name">Python (Problem Solving)</div>
+      <div class="cert-issuer">HackerRank</div>
+      <a class="cert-link" href="https://www.hackerrank.com/certificates/5616582bdaf3" target="_blank">View credential →</a>
+    </div>
+    <div class="cert-card">
+      <span class="cert-icon">🗄️</span>
+      <div class="cert-name">SQL Intermediate</div>
+      <div class="cert-issuer">HackerRank</div>
+      <a class="cert-link" href="https://www.hackerrank.com/certificates/7053d3aa322a" target="_blank">View credential →</a>
+    </div>
   </div>
 </section>
 
@@ -589,13 +1145,13 @@ footer{border-top:1px solid var(--border);padding:1.5rem 3rem;display:flex;align
         <p>Three quality layers — <strong>Bronze, Silver, Gold</strong>. Raw data arrives in Bronze, gets cleaned in Silver, and is modeled for BI in Gold. Principle: separate ingestion, quality, and consumption concerns completely.</p>
         <h3>Bronze — zero transformation, full fidelity</h3>
         <div class="code-block"><span class="cm"># Bronze ingestion — Delta + metadata columns</span>
-df_raw = spark.read.option(<span class="cs">"header"</span>, <span class="cs">"true"</span>).csv(<span class="cs">"abfss://landing@adls.dfs.core.windows.net/pos/"</span>)
+df_raw = spark.read.option(<span class="cs">"header"</span>, <span class="cs">"true"</span>).csv(<span class="cs">"abfss://<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bad6dbd4ded3d4ddfadbded6c994dedcc994d9d5c8df94cdd3d4ded5cdc994d4dfce">[email&#160;protected]</a>/pos/"</span>)
 df_raw \
   .withColumn(<span class="cs">"_ingestion_ts"</span>, F.current_timestamp()) \
   .withColumn(<span class="cs">"_source_file"</span>, F.input_file_name()) \
   .write.format(<span class="cs">"delta"</span>).mode(<span class="cs">"append"</span>) \
   .partitionBy(<span class="cs">"source_id"</span>, <span class="cs">"load_date"</span>) \
-  .save(<span class="cs">"abfss://bronze@adls.dfs.core.windows.net/pos_data/"</span>)</div>
+  .save(<span class="cs">"abfss://<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="26445449485c436647424a5508424055084549544308514f484249515508484352">[email&#160;protected]</a>/pos_data/"</span>)</div>
         <h3>Silver — SCD Type 2 merge</h3>
         <div class="code-block">DeltaTable.forPath(spark, silver_path).alias(<span class="cs">"target"</span>) \
   .merge(df_updates.alias(<span class="cs">"source"</span>), <span class="cs">"target.id = source.id AND target.is_current = true"</span>) \
@@ -796,7 +1352,7 @@ density = np.exp(kde.score_samples(x_range.reshape(-<span class="cn">1</span>, <
       <h3>Let's build<br/>something<br/><em style="color:var(--teal);font-style:normal">worth running.</em></h3>
       <p>Open to <strong>Senior Data Engineer</strong> and <strong>Lead Data Engineer</strong> roles — product-first companies where data is treated as a first-class citizen.</p>
       <div class="contact-links">
-        <a href="mailto:ishwargupta4554@gmail.com" class="contact-link"><div class="c-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00ffd1" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="c-label">Email</div><div class="c-val">ishwargupta4554@gmail.com</div></div></a>
+        <a href="ishwargupta4554@gmail.com" class="contact-link"><div class="c-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00ffd1" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="c-label">Email</div><div class="c-val">ishwargupta4554@gmail.com</span></div></div></a>
         <a href="https://www.linkedin.com/in/ishwar-gupta-b3441b189/" target="_blank" class="contact-link"><div class="c-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00ffd1" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div><div><div class="c-label">LinkedIn</div><div class="c-val">ishwar-gupta-b3441b189</div></div></a>
         <a href="https://github.com/ish-g" target="_blank" class="contact-link"><div class="c-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00ffd1" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div><div><div class="c-label">GitHub</div><div class="c-val">github.com/ish-g</div></div></a>
         <a href="https://medium.com/@ishwargupta4554" target="_blank" class="contact-link"><div class="c-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00ffd1" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg></div><div><div class="c-label">Medium</div><div class="c-val">@ishwargupta4554</div></div></a>
@@ -819,7 +1375,7 @@ density = np.exp(kde.score_samples(x_range.reshape(-<span class="cn">1</span>, <
   <span>Senior Data Engineer</span>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* CURSOR */
 var dot=document.getElementById('cursor-dot'),ring=document.getElementById('cursor-ring'),mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
@@ -907,12 +1463,6 @@ setTimeout(function(){document.querySelectorAll('.arch-box').forEach(function(b,
   document.addEventListener('mouseup',function(){isDragging=false;});
   document.addEventListener('mousemove',function(e){if(!isDragging)return;e.preventDefault();var x=e.pageX-track.offsetLeft;track.scrollLeft=scrollLeft-(x-startX)*1.2;});
 })();
-
-/* 3D TILT */
-document.querySelectorAll('.proj-card').forEach(function(card){
-  card.addEventListener('mousemove',function(e){var r=card.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,cx=r.width/2,cy=r.height/2;card.style.transform='perspective(600px) rotateX('+-(y-cy)/cy*5+'deg) rotateY('+(x-cx)/cx*5+'deg) translateY(-4px)';});
-  card.addEventListener('mouseleave',function(){card.style.transform='';});
-});
 </script>
 </body>
 </html>
